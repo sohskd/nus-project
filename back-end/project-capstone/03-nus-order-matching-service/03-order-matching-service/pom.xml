@@ -13,16 +13,40 @@
 
   <artifactId>03-order-matching-service</artifactId>
 
-  <properties>
-    <maven.compiler.source>8</maven.compiler.source>
-    <maven.compiler.target>8</maven.compiler.target>
-  </properties>
+  <profiles>
+    <profile>
+      <id>cloud-gcp</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.springframework.cloud</groupId>
+          <artifactId>spring-cloud-gcp-starter</artifactId>
+          <version>1.0.0.RELEASE</version>
+        </dependency>
+        <!--        <dependency>-->
+        <!--          <groupId>org.springframework.cloud</groupId>-->
+        <!--          <artifactId>spring-cloud-gcp-starter-sql-mysql</artifactId>-->
+        <!--          <version>1.0.0.RELEASE</version>-->
+        <!--        </dependency>-->
+      </dependencies>
+    </profile>
+  </profiles>
+
 
   <build>
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <groupId>com.google.cloud.tools</groupId>
+        <artifactId>appengine-maven-plugin</artifactId>
+        <version>2.2.0</version>
+        <configuration>
+          <version>1-0-1-order-matching-service</version>
+          <projectId>GCLOUD_CONFIG</projectId>
+        </configuration>
       </plugin>
     </plugins>
   </build>
