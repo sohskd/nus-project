@@ -1,0 +1,1 @@
+web: java -Dserver.port=$PORT $JAVA_OPTS -jar 02-nus-account-mgt-service/02-account-mgt-service/target/02-account-mgt-service-0.0.1-SNAPSHOT.jar

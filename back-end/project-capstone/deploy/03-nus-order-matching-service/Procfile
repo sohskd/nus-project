@@ -1,0 +1,1 @@
+web: java -Dserver.port=$PORT $JAVA_OPTS -jar 03-nus-order-matching-service/03-order-matching-service/target/03-order-matching-service-0.0.1-SNAPSHOT.jar
