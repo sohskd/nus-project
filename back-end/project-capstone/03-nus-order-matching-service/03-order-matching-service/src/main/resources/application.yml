@@ -1,0 +1,13 @@
+server:
+   port: 9091
+
+cloud:
+   aws:
+      region:
+         static: ap-southeast-2
+         auto: false
+      credentials:
+         access-key: AKIAUIXTSUMBP6MEIU3T
+         secret-key: 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
+      end-point:
+         uri: https://sqs.ap-southeast-2.amazonaws.com/293642347266/order_matching_buyer_queue.fifo
