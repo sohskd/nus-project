@@ -11,7 +11,13 @@ public class Subscriber {
 	private static final Logger logger = LoggerFactory.getLogger(Subscriber.class);
 
 	@SqsListener("order_matching_buyer_queue.fifo")
-	public void receiveMessage(String stringJson) {
-		logger.info("Message Received using SQS Listener " + stringJson);
+	public void receiveBuyMessage(String stringJson) {
+		logger.info("Message {} Received from order_matching_buyer_queue.fifo", stringJson);
 	}
+
+	@SqsListener("order_matching_seller_queue.fifo")
+	public void receiveSellMessage(String stringJson) {
+		logger.info("Message {} Received from order_matching_seller_queue.fifo", stringJson);
+	}
+
 }
