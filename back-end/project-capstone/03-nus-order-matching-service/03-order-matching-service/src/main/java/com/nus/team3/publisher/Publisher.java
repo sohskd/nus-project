@@ -3,6 +3,7 @@ package com.nus.team3.publisher;
 import com.amazonaws.services.sqs.AmazonSQSAsync;
 import com.amazonaws.services.sqs.model.SendMessageRequest;
 import com.amazonaws.services.sqs.model.SendMessageResult;
+import com.nus.team3.constants.TradeEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,30 +23,39 @@ public class Publisher {
 	@Autowired
 	private AmazonSQSAsync amazonSQSAsync;
 
-	@Value("${cloud.aws.end-point.uri}")
-	private String endPoint;
+	@Value("${cloud.aws.end-point.buyer.uri}")
+	private String buyQueueEndPoint;
+
+	@Value("${cloud.aws.end-point.seller.uri}")
+	private String sellQueueEndPoint;
 
 	@GetMapping("/testing")
 	public String sendTestMessage(){
 		return "End point test successful ";
 	}
 
-	@PostMapping("/message")
-	public SendMessageResult sendMessage(@RequestBody String messageBody) {
-
+	@PostMapping("/order")
+	public SendMessageResult sendOrder(@RequestBody String messageBody) {
 		try {
+			String[] messageBodyList = messageBody.split("#");
+			if (messageBodyList.length != 4 ||
+					(!messageBodyList[0].equalsIgnoreCase(TradeEnum.SIDE.BUY.name()) ||
+							!messageBodyList[0].equalsIgnoreCase(TradeEnum.SIDE.SELL.name()))) {
+				logger.info("Unrecognized order message {}, please make sure message is in format: buy/sell#stockName#quantity#price", messageBody);
+				return null;
+			}
+			String side = messageBodyList[0];
 			SendMessageRequest messageRequest = new SendMessageRequest()
-					.withQueueUrl(endPoint)
+					.withQueueUrl(side.equalsIgnoreCase(TradeEnum.SIDE.BUY.name())? buyQueueEndPoint : sellQueueEndPoint)
 					.withMessageBody(messageBody);
-			messageRequest.setMessageGroupId("1");
+			messageRequest.setMessageGroupId(side);
 			messageRequest.setMessageDeduplicationId(String.valueOf(System.currentTimeMillis()));
 			SendMessageResult response = amazonSQSAsync.sendMessage(messageRequest);
-			logger.info("Message sent successfully  " + messageBody);
+			logger.info("Message {} sent successfully to {} queue", messageBody, side);
 			return response;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-
 }
