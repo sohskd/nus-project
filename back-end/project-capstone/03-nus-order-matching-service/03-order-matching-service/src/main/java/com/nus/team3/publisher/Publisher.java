@@ -38,7 +38,7 @@ public class Publisher {
 	public SendMessageResult sendOrder(@RequestBody String messageBody) {
 		try {
 			String[] messageBodyList = messageBody.split("#");
-			if (messageBodyList.length != 4 ||
+			if (messageBodyList.length != 5 ||
 					(!messageBodyList[0].equalsIgnoreCase(TradeEnum.SIDE.BUY.name()) &&
 							!messageBodyList[0].equalsIgnoreCase(TradeEnum.SIDE.SELL.name()))) {
 				logger.info("Unrecognized order message {}, please make sure message is in format: buy/sell#stockName#quantity#price", messageBody);

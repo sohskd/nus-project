@@ -2,16 +2,16 @@ package com.nus.team3.dto;
 
 import com.nus.team3.constants.TradeEnum;
 
-class Order implements Comparable<Order>{
+public class Order implements Comparable<Order>{
     private String buyOrSell;
     private String transactionId;
     private String stockName;
     private String user;
     private long timestamp;
-    private int price;
+    private float price;
     private int quantity;
 
-    public Order(String buyOrSell, String transactionId, String stockName, String user, long timestamp, int price, int quantity) {
+    public Order(String buyOrSell, String transactionId, String stockName, String user, long timestamp, float price, int quantity) {
         this.buyOrSell = buyOrSell;
         this.transactionId = transactionId;
         this.stockName = stockName;
@@ -21,12 +21,20 @@ class Order implements Comparable<Order>{
         this.quantity = quantity;
     }
 
+    public void print(){
+        System.out.print(this.buyOrSell + '#' +
+                         this.stockName + '#' +
+                         this.transactionId + '#' +
+                         this.quantity+ '#' +
+                         this.price);
+    }
+
     @Override
     public int compareTo(Order o){
         if (this.getBuyOrSell().equals(TradeEnum.SIDE.BUY.name())){
-            return o.getPrice() - this.getPrice() != 0 ? o.getPrice() - this.getPrice() : (int)(this.getTimestamp() - o.getTimestamp());
+            return o.getPrice() - this.getPrice() != 0.00 ? (o.getPrice() - this.getPrice() > 0 ? 1 : -1) : (int)(this.getTimestamp() - o.getTimestamp());
         }else{
-            return this.getPrice() - o.getPrice() != 0 ? this.getPrice() - o.getPrice() : (int)(this.getTimestamp() - o.getTimestamp());
+            return this.getPrice() - o.getPrice() != 0.00 ? (this.getPrice() - o.getPrice() > 0 ? 1 : -1): (int)(this.getTimestamp() - o.getTimestamp());
         }
     }
 
@@ -50,7 +58,7 @@ class Order implements Comparable<Order>{
         return timestamp;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 
