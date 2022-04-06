@@ -5,11 +5,13 @@ import com.nus.team3.constants.TradeEnum;
 public class Order implements Comparable<Order>{
     private String buyOrSell;
     private String transactionId;
+    private String transactionIdAfterMatch;
     private String stockName;
     private String user;
     private long timestamp;
     private float price;
     private int quantity;
+    private String matchStatus;
 
     public Order(String buyOrSell, String transactionId, String stockName, String user, long timestamp, float price, int quantity) {
         this.buyOrSell = buyOrSell;
@@ -19,6 +21,8 @@ public class Order implements Comparable<Order>{
         this.timestamp = timestamp;
         this.price = price;
         this.quantity = quantity;
+        this.matchStatus = TradeEnum.STATUS.UNMATCHED.name();
+        this.transactionIdAfterMatch = "";
     }
 
     public void print(){
@@ -64,5 +68,26 @@ public class Order implements Comparable<Order>{
 
     public int getQuantity() {
         return quantity;
+    }
+
+
+    public String getTransactionIdAfterMatch() {
+        return transactionIdAfterMatch;
+    }
+
+    public String getMatchStatus() {
+        return matchStatus;
+    }
+
+    public void setTransactionIdAfterMatch(String transactionIdAfterMatch) {
+        this.transactionIdAfterMatch = transactionIdAfterMatch;
+    }
+
+    public void setMatchStatus(String status){
+        this.matchStatus = status;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
     }
 }
