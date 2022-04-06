@@ -6,4 +6,10 @@ public class TradeEnum {
         SELL
     }
 
+    public enum STATUS {
+        MATCHED,
+        UNMATCHED,
+        CANCELLED
+    }
+
 }

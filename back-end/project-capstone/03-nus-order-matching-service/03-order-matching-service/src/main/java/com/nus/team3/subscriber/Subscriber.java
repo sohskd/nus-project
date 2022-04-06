@@ -8,8 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.aws.messaging.listener.annotation.SqsListener;
 import org.springframework.stereotype.Component;
-
-import java.util.Random;
+import com.nus.team3.utils.*;
 
 @Component
 public class Subscriber {
@@ -23,14 +22,14 @@ public class Subscriber {
 	public void receiveBuyMessage(String message) {
 		logger.info("Message {} Received from order_matching_buyer_queue.fifo", message);
 		Order order = constructOrder(message);
-		if (order != null){orderMatchingController.addOrder(order);}
+		if (order != null){orderMatchingController.processOrder(order);}
 	}
 
 	@SqsListener("order_matching_seller_queue.fifo")
 	public void receiveSellMessage(String message) {
 		logger.info("Message {} Received from order_matching_seller_queue.fifo", message);
 		Order order = constructOrder(message);
-		if (order != null){orderMatchingController.addOrder(order);}
+		if (order != null){orderMatchingController.processOrder(order);}
 	}
 
 	public Order constructOrder(String message){
@@ -42,7 +41,7 @@ public class Subscriber {
 			float price = Float.parseFloat(messageBodyList[3]);
 			String user = messageBodyList[4];
 			long timestamp = System.currentTimeMillis();
-			String transactionId = getSaltString();
+			String transactionId = Utils.getSaltString();
 			if(orderIsValid(side, quantity, price)){
 				return new Order(side,transactionId,stockName, user, timestamp,price,quantity);
 			}
@@ -56,17 +55,6 @@ public class Subscriber {
 		}
 	}
 
-	private String getSaltString() {
-		String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-		StringBuilder salt = new StringBuilder();
-		Random rnd = new Random();
-		while (salt.length() < 18) { // length of the random string.
-			int index = (int) (rnd.nextFloat() * SALTCHARS.length());
-			salt.append(SALTCHARS.charAt(index));
-		}
-		String saltStr = salt.toString();
-		return saltStr;
-	}
 
 	private boolean orderIsValid(String side, int quantity, float price){
 		return (side.equalsIgnoreCase(TradeEnum.SIDE.BUY.name()) ||
