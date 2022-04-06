@@ -25,4 +25,4 @@ cloud:
          access-key: <ask vincent for key>
          secret-key: <ask vincent for key>
       end-point:
-         uri: https://sqs.ap-southeast-2.amazonaws.com/293642347266/order_matching_buyer_queue.fifo
+         uri: https://sqs.ap-southeast-2.amazonaws.com/099209825265/order_matching_buyer_queue.fifo
