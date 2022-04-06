@@ -1,8 +1,6 @@
 package com.nus.team3.model;
 
-import com.nus.team3.constants.TradeEnum;
 import com.nus.team3.dto.Order;
-import com.nus.team3.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
