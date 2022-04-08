@@ -1,9 +1,7 @@
 package com.nus.team3.mapper;
 
 import com.nus.team3.dto.Order;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -23,4 +21,16 @@ public interface TransactionHistoryMapper {
             @Result(property = "timestamp", column = "create_time"),
     })
     List<Order> getAllTxnHist();
+
+    @Insert("Insert into transaction_history_tab (user,stock_ticker,side,price,quantity,status,transaction_id,transaction_id_after_match,create_time) " +
+            "values (#{user}," +
+            "#{stockTicker}," +
+            "#{buyOrSell}," +
+            "#{price}," +
+            "#{quantity}," +
+            "#{matchStatus}," +
+            "#{transactionId}," +
+            "#{transactionIdAfterMatch}," +
+            "#{timestamp})")
+    public Integer saveTxn(Order order);
 }
