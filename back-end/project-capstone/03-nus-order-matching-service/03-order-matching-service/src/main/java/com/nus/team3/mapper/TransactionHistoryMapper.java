@@ -22,7 +22,7 @@ public interface TransactionHistoryMapper {
     })
     List<Order> getAllTxnHist();
 
-    @Insert("Insert into transaction_history_tab (user,stock_ticker,side,price,quantity,status,transaction_id,transaction_id_after_match,create_time) " +
+    @Insert("Insert into transaction_history_tab " +
             "values (#{user}," +
             "#{stockTicker}," +
             "#{buyOrSell}," +
