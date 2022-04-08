@@ -1,6 +1,6 @@
 package com.nus.team3.mapper;
 
-import com.nus.team3.dto.OrderDto;
+import com.nus.team3.dto.Order;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -22,5 +22,5 @@ public interface TransactionHistoryMapper {
             @Result(property = "transactionIdAfterMatch", column = "transaction_id_after_match"),
             @Result(property = "timestamp", column = "create_time"),
     })
-    List<OrderDto> getAllTxnHist();
+    List<Order> getAllTxnHist();
 }

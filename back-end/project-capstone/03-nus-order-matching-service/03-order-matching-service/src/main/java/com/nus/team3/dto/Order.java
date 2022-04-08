@@ -1,7 +1,15 @@
 package com.nus.team3.dto;
 
 import com.nus.team3.constants.TradeEnum;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Order implements Comparable<Order>{
     private String buyOrSell;
     private String transactionId;

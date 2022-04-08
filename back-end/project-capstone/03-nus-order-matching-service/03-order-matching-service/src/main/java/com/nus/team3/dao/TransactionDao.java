@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/save")
+@RequestMapping("/transaction")
 public class TransactionDao {
 
     @Autowired
     @Qualifier("mysqlSqlSessionTemplate")
     private SqlSessionTemplate sqlSessionTemplate;
 
-    @GetMapping("/testPosition")
+    @GetMapping("/getAllTxnHist")
     public List<PositionDto> testPosition(){
         return sqlSessionTemplate.selectList("com.nus.team3.mapper.TransactionHistoryMapper.getAllTxnHist");
     }
