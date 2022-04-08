@@ -16,14 +16,14 @@ public class MasterPool {
     }
 
     public void addOrder(Order o){
-        if (!stockMap.keySet().contains(o.getStockName())){
-            stockMap.put(o.getStockName(), new StockOrderPool(o.getStockName()));
+        if (!stockMap.keySet().contains(o.getStockTicker())){
+            stockMap.put(o.getStockTicker(), new StockOrderPool(o.getStockTicker()));
         }
-        stockMap.get(o.getStockName()).addByPriceByTimestamp(o);
+        stockMap.get(o.getStockTicker()).addByPriceByTimestamp(o);
     }
 
     public void match(Order o){
-        stockMap.get(o.getStockName()).match();
+        stockMap.get(o.getStockTicker()).match();
     }
 
     public void showAllQueue(){
