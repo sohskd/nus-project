@@ -1,6 +1,5 @@
 package com.nus.team3.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,17 +9,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PositionDto {
+public class UserAccountDto {
 
   private Integer id;
-  private Integer userId;
-  private String stockTicker;
-  private String side;
-  private Double price;
-  private Integer quantity;
-  private String status;
-  private String transactionId;
-  private String transactionIdAfterMatch;
+  private String email;
+  private String name;
   private String createTime;
   private String updateTime;
 }

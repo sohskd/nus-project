@@ -6,4 +6,6 @@ import java.util.List;
 public interface PositionService {
 
     List<PositionDto> getAllPosition();
+
+    List<PositionDto> getAllPositionByUserId(Integer userId);
 }
