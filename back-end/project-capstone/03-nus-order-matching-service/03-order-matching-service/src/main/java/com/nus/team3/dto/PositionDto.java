@@ -25,4 +25,7 @@ public class PositionDto {
   private String updateTime;
 
   private Double priceLive;
+
+  private Double profitOrLoss;
+  private Boolean isProfit;
 }

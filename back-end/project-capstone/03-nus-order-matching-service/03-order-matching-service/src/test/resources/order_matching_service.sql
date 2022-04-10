@@ -56,10 +56,11 @@ CREATE TABLE `stock_live_tab`
 (
     `stock_ticker` VARCHAR(255) NOT NULL,
     `price`        FLOAT(8) NOT NULL,
+    `price_fix_around`        FLOAT(8) NOT NULL,
     `create_time`  BIGINT unsigned DEFAULT NULL,
     `update_time`  BIGINT unsigned DEFAULT NULL,
     PRIMARY KEY (`stock_ticker`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
-INSERT INTO `stock_live_tab` VALUES ('MSFT',110.0,1649238460,1649238460);
-INSERT INTO `stock_live_tab` VALUES ('SEA',200.0,1649238460,1649238460);
+INSERT INTO `stock_live_tab` VALUES ('MSFT',110.0,105.0,1649238460,1649238460);
+INSERT INTO `stock_live_tab` VALUES ('SEA',200.0,190.0,1649238460,1649238460);
