@@ -1,8 +1,9 @@
-package com.nus.team3.service;
+package com.nus.team3.service.impl;
 
 import com.nus.team3.dto.PositionDto;
 import com.nus.team3.mapper.PositionMapper;
 import com.nus.team3.mapper.UserAccountMapper;
+import com.nus.team3.service.PositionService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

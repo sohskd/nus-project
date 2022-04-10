@@ -12,11 +12,10 @@ import org.springframework.stereotype.Component;
 public interface PositionMapper {
 
   @Select({"<script>",
-      "SELECT * FROM transaction_history_tab",
+      "SELECT a.*, b.price as price_live FROM transaction_history_tab a, stock_live_tab b",
       "<where>",
-      "<if test=\"userId != null\">",
-      "user_id=#{userId}",
-      "</if>",
+      "a.stock_ticker = b.stock_ticker",
+      "<if test=\"userId != null\"> AND user_id=#{userId}</if>",
       "</where>",
       "</script>"})
   @Results({
@@ -29,7 +28,8 @@ public interface PositionMapper {
       @Result(property = "transactionId", column = "transaction_id"),
       @Result(property = "transactionIdAfterMatch", column = "transaction_id_after_match"),
       @Result(property = "createTime", column = "create_time"),
-      @Result(property = "updateTime", column = "update_time")
+      @Result(property = "updateTime", column = "update_time"),
+      @Result(property = "priceLive", column = "price_live")
   })
   List<PositionDto> getPosition(@Param("userId") Integer userId);
 

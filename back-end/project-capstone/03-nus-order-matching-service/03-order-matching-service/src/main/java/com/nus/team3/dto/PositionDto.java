@@ -23,4 +23,6 @@ public class PositionDto {
   private String transactionIdAfterMatch;
   private String createTime;
   private String updateTime;
+
+  private Double priceLive;
 }
