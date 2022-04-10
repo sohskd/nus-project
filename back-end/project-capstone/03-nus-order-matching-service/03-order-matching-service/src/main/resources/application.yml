@@ -1,28 +1,14 @@
+spring:
+  application:
+    name: order-matching-service
+  profiles:
+    active: cloud-gcp
+
 server:
   port: 8080
-
-bs:
-  mysql:
-    driver: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/order_matching_service_db?characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
-    username: root
-    password: password
-    pool:
-      name: order-mysql
 
 management:
   endpoints:
     web:
       exposure:
         include: "*"
-
-cloud:
-   aws:
-      region:
-         static: ap-southeast-2
-         auto: false
-      credentials:
-         access-key: <ask vincent for key>
-         secret-key: <ask vincent for key>
-      end-point:
-         uri: https://sqs.ap-southeast-2.amazonaws.com/099209825265/order_matching_buyer_queue.fifo
