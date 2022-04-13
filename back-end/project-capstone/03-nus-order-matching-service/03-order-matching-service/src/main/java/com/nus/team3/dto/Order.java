@@ -15,7 +15,7 @@ public class Order implements Comparable<Order>{
     private String transactionId;
     private String transactionIdAfterMatch;
     private String stockTicker;
-    private String user;
+    private int user;
     private long timestamp;
     private float price;
     private int quantity;
@@ -25,19 +25,27 @@ public class Order implements Comparable<Order>{
         this.buyOrSell = buyOrSell;
         this.transactionId = transactionId;
         this.stockTicker = stockTicker;
-        this.user = user;
+        this.user = Integer.parseInt(user);
         this.timestamp = timestamp;
         this.price = price;
         this.quantity = quantity;
         this.matchStatus = TradeEnum.STATUS.UNMATCHED.name();
+        this.transactionIdAfterMatch = "";
     }
 
     public void print(){
-        System.out.print(this.buyOrSell + '#' +
-                         this.stockTicker + '#' +
-                         this.transactionId + '#' +
-                         this.quantity+ '#' +
-                         this.price);
+        System.out.print(this.toString());
+    }
+
+    public String toString(){
+        return this.buyOrSell + '#' +
+                this.transactionId + '#' +
+                this.stockTicker + '#' +
+                this.user + '#' +
+                this.price + '#' +
+                this.quantity+ '#' +
+                this.matchStatus + '#' +
+                this.transactionIdAfterMatch;
     }
 
     @Override
@@ -61,7 +69,7 @@ public class Order implements Comparable<Order>{
         return stockTicker;
     }
 
-    public String getUser() {
+    public int getUser() {
         return user;
     }
 

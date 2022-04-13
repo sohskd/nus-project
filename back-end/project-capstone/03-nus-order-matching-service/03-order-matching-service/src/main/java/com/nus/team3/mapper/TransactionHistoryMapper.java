@@ -10,7 +10,7 @@ import java.util.List;
 public interface TransactionHistoryMapper {
     @Select("SELECT * FROM transaction_history_tab")
     @Results({
-            @Result(property = "user", column = "user"),
+            @Result(property = "user", column = "user_id"),
             @Result(property = "stockTicker", column = "stock_ticker"),
             @Result(property = "buyOrSell", column = "side"),
             @Result(property = "price", column = "price"),
@@ -22,7 +22,7 @@ public interface TransactionHistoryMapper {
     })
     List<Order> getAllTxnHist();
 
-    @Insert("Insert into transaction_history_tab " +
+    @Insert("Insert into transaction_history_tab (user_id,stock_ticker,side,price,quantity,status,transaction_id,transaction_id_after_match,create_time)" +
             "values (#{user}," +
             "#{stockTicker}," +
             "#{buyOrSell}," +

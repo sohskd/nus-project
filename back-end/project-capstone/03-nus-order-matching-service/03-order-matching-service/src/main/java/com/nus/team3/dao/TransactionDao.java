@@ -1,8 +1,7 @@
 package com.nus.team3.dao;
 
-import com.amazonaws.services.sqs.model.SendMessageResult;
+import com.nus.team3.constants.TradeEnum;
 import com.nus.team3.dto.Order;
-import com.nus.team3.subscriber.Subscriber;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,9 +17,9 @@ public class TransactionDao {
 
     private static final Logger logger = LoggerFactory.getLogger(TransactionDao.class);
 
-    private String rootMapperPath = "com.nus.team3.mapper.TransactionHistoryMapper";
-    private String selectAllQuery = ".getAllTxnHist";
-    private String saveTxnQuery = ".saveTxn";
+    public static String rootMapperPath = "com.nus.team3.mapper.TransactionHistoryMapper";
+    public static String selectAllQuery = ".getAllTxnHist";
+    public static String saveTxnQuery = ".saveTxn";
 
     @Autowired
     @Qualifier("mysqlSqlSessionTemplate")
@@ -39,8 +38,14 @@ public class TransactionDao {
                                 messageBodyList[2],
                                 messageBodyList[3],
                                 System.currentTimeMillis(),
-                Float.parseFloat(messageBodyList[4]),
+                Float.parseFloat(String.format("%.2f", Double.valueOf(messageBodyList[4]))),
                 Integer.parseInt(messageBodyList[5]));
+        if (messageBodyList.length > 6 && messageBodyList[6].equalsIgnoreCase(TradeEnum.STATUS.MATCHED.name())){
+            order.setMatchStatus(messageBodyList[6]);
+        }
+        if (messageBodyList.length > 7 ){
+            order.setTransactionIdAfterMatch(messageBodyList[7]);
+        }
         sqlSessionTemplate.insert(rootMapperPath + saveTxnQuery, order);
         return 1;
     }
