@@ -2,13 +2,17 @@ package com.nus.team3.model;
 
 import com.nus.team3.constants.TradeEnum;
 import com.nus.team3.dto.Order;
+import com.nus.team3.http.HttpSender;
 import com.nus.team3.utils.Utils;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
 public class StockOrderPool {
+
+    private static final Logger logger = LoggerFactory.getLogger(StockOrderPool.class);
 
     private TreeMap<Order,String> buyQueue = new TreeMap<Order, String>();
     private TreeMap<Order,String> sellQueue = new TreeMap<Order, String>();
@@ -48,8 +52,16 @@ public class StockOrderPool {
 
         sellOrder.setTransactionIdAfterMatch(transactionIdAfterMatch);
         sellOrder.setMatchStatus(TradeEnum.STATUS.MATCHED.name());
-        sellOrder.setPrice(buyOrder.getPrice());
 
+        new HttpSender().sendOrder(buyOrder);
+        logger.info("Matched order {} successfully persisted to db, id after match is {}",
+                buyOrder.getTransactionId(),
+                buyOrder.getTransactionIdAfterMatch());
+
+        new HttpSender().sendOrder(sellOrder);
+        logger.info("Matched order {} successfully persisted to db, id after match is {}",
+                sellOrder.getTransactionId(),
+                sellOrder.getTransactionIdAfterMatch());
         matchedOrderQueue.add(buyOrder);
         matchedOrderQueue.add(sellOrder);
     }
