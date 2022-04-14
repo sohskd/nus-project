@@ -42,8 +42,8 @@ public class Order implements Comparable<Order>{
                 this.transactionId + '#' +
                 this.stockTicker + '#' +
                 this.user + '#' +
-                this.price + '#' +
                 this.quantity+ '#' +
+                this.price + '#' +
                 this.matchStatus + '#' +
                 this.transactionIdAfterMatch;
     }

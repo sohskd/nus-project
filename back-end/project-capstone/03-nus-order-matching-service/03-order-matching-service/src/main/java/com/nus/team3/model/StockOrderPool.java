@@ -36,13 +36,34 @@ public class StockOrderPool {
             Order bestBuyOrder = buyQueue.firstEntry().getKey();
             Order bestSellOrder = sellQueue.firstEntry().getKey();
             if (bestBuyOrder.getPrice() >= bestSellOrder.getPrice()) {
+                int buyQty = bestBuyOrder.getQuantity();
+                int sellQty = bestSellOrder.getQuantity();
+                int excessBuyQty = buyQty - Math.min(buyQty, sellQty);
+                int excessSellQty = sellQty - Math.min(buyQty, sellQty);
+                Order excessBuyOrder = null;
+                Order excessSellOrder = null;
+                if (excessBuyQty > 0) {
+                    bestBuyOrder.setQuantity(Math.min(buyQty, sellQty));
+                    logger.info("Creating new excess order");
+                    excessBuyOrder = new Order(bestBuyOrder.getBuyOrSell(), bestBuyOrder.getTransactionId(), bestBuyOrder.getStockTicker(), String.valueOf(bestBuyOrder.getUser()), bestBuyOrder.getTimestamp(), bestBuyOrder.getPrice(),
+                            excessBuyQty);
+                    new HttpSender().sendOrder(excessBuyOrder);
+                } else if (excessSellQty > 0) {
+                    bestSellOrder.setQuantity(Math.min(buyQty, sellQty));
+                    excessSellOrder = new Order(bestSellOrder.getBuyOrSell(), bestSellOrder.getTransactionId(), bestSellOrder.getStockTicker(), String.valueOf(bestSellOrder.getUser()), bestSellOrder.getTimestamp(), bestSellOrder.getPrice(),
+                            excessSellQty);
+                    new HttpSender().sendOrder(excessSellOrder);
+                }
                 processMatchedOrder(bestBuyOrder, bestSellOrder);
                 buyQueue.remove(bestBuyOrder);
                 sellQueue.remove(bestSellOrder);
+                if(excessBuyOrder != null ){buyQueue.put(excessBuyOrder,excessBuyOrder.getTransactionId());}
+                if(excessSellOrder != null ){sellQueue.put(excessSellOrder,excessSellOrder.getTransactionId());}
                 match();
             }
         }
     }
+
 
     public void processMatchedOrder(Order buyOrder, Order sellOrder){
         String transactionIdAfterMatch = Utils.getSaltString();
