@@ -38,8 +38,8 @@ public class TransactionDao {
                                 messageBodyList[2],
                                 messageBodyList[3],
                                 System.currentTimeMillis(),
-                Float.parseFloat(String.format("%.2f", Double.valueOf(messageBodyList[4]))),
-                Integer.parseInt(messageBodyList[5]));
+                Float.parseFloat(String.format("%.2f", Double.valueOf(messageBodyList[5]))),
+                Integer.parseInt(messageBodyList[4]));
         if (messageBodyList.length > 6 && messageBodyList[6].equalsIgnoreCase(TradeEnum.STATUS.MATCHED.name())){
             order.setMatchStatus(messageBodyList[6]);
         }
