@@ -21,15 +21,13 @@ jobs:
       - name: Install Maven artifacts
         run: "mvn -f ./back-end/project-capstone/pom.xml clean install"
 
-      - name: Install App Engine Maven Plugin
-        run: >
-          mvn install:install-file
-          -Dfile=back-end/project-capstone/mvn-repository/appengine-maven-plugin-2.4.2.jar
-          -DgroupId=com.google.cloud.tools
-          -DartifactId=appengine-maven-plugin
-          -Dversion=2.4.2
-          -Dpackaging=jar
-          -DgeneratePom=true
+      - name: Configure settings.xml
+        uses: whelk-io/maven-settings-xml-action@v20
+        with:
+          plugin_groups: >
+            [
+              "com.google.cloud.tools"
+            ]
 
       - name: Build and deploy
-        run: "mvn -f ./back-end/project-capstone/pom.xml clean package appengine:deploy"
+        run: "mvn -f ./back-end/project-capstone/pom.xml clean package appengine:help"
