@@ -18,5 +18,8 @@ jobs:
       - name: Checkout
         uses: "actions/checkout@v3"
 
+      - name: Install Maven artifacts
+        run: "mvn install:install"
+
       - name: Build and deploy
-        run: "mvn -f ./back-end/project-capstone/pom.xml clean install package appengine:deploy"
+        run: "mvn -f ./back-end/project-capstone/pom.xml clean package appengine:deploy"
