@@ -57,8 +57,18 @@
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-aws-messaging</artifactId>
       <version>2.2.1.RELEASE</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.httpcomponents</groupId>
+          <artifactId>httpclient</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
-
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <version>4.5.8</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -82,7 +92,7 @@
         <artifactId>appengine-maven-plugin</artifactId>
         <version>2.2.0</version>
         <configuration>
-          <version>1-0-1-order-matching-service</version>
+          <version>1-0-1-order-matching-service-vincent</version>
           <projectId>GCLOUD_CONFIG</projectId>
         </configuration>
       </plugin>
