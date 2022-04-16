@@ -22,7 +22,13 @@ jobs:
         run: "mvn -f ./back-end/project-capstone/pom.xml clean install"
 
       - name: Install App Engine Maven Plugin
-        run: "mvn install:install-file -Dfile=back-end/project-capstone/mvn-repository/appengine-maven-plugin-2.4.2.jar"
+        run: >
+          mvn install:install-file
+          -Dfile=back-end/project-capstone/mvn-repository/appengine-maven-plugin-2.4.2.jar
+          -DgroupId=com.google.cloud.tools
+          -DartifactId=appengine-maven-plugin
+          -Dversion=2.4.2
+          -Dpackaging=jar
 
       - name: Build and deploy
         run: "mvn -f ./back-end/project-capstone/pom.xml clean package appengine:deploy"
