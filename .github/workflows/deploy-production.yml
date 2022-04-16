@@ -29,5 +29,8 @@ jobs:
               "com.google.cloud.tools"
             ]
 
-      - name: Build and deploy
-        run: "mvn -f ./back-end/project-capstone/pom.xml clean package appengine:help"
+      - name: Build application package
+        run: "mvn -f ./back-end/project-capstone/pom.xml clean package"
+
+      - name: Deploy to App Engine
+        run: "mvn -f ./back-end/project-capstone/pom.xml appengine:deploy"
