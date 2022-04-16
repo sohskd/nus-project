@@ -21,5 +21,8 @@ jobs:
       - name: Install Maven artifacts
         run: "mvn -f ./back-end/project-capstone/pom.xml clean install"
 
+      - name: Install App Engine Maven Plugin
+        run: "mvn install:install-file -Dfile=back-end/project-capstone/mvn-repository/appengine-maven-plugin-2.4.2.jar"
+
       - name: Build and deploy
         run: "mvn -f ./back-end/project-capstone/pom.xml clean package appengine:deploy"
