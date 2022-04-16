@@ -24,8 +24,8 @@
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 
-  <repositories>
-    <repository>
+  <pluginRepositories>
+    <pluginRepository>
       <id>central</id>
       <name>Maven Central</name>
       <layout>default</layout>
@@ -33,6 +33,6 @@
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
-    </repository>
-  </repositories>
+    </pluginRepository>
+  </pluginRepositories>
 </project>
