@@ -18,8 +18,8 @@ cloud:
 bs:
   mysql:
     driver: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/order_matching_service_db?characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
-    username: root
-    password: password
+    url: jdbc:mysql://34.142.159.154:3306/order_matching_service_db?characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
+    username: ordermatching
+    password: Team3$
     pool:
       name: order-mysql
