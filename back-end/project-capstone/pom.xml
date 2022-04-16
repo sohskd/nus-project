@@ -35,4 +35,11 @@
       </snapshots>
     </pluginRepository>
   </pluginRepositories> -->
+  <plugins>
+    <plugin>
+      <groupId>com.google.cloud.tools</groupId>
+      <artifactId>appengine-maven-plugin</artifactId>
+      <version>2.4.0</version>
+    </plugin>
+  </plugins>
 </project>
