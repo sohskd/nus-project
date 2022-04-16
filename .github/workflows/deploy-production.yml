@@ -29,6 +29,7 @@ jobs:
           -DartifactId=appengine-maven-plugin
           -Dversion=2.4.2
           -Dpackaging=jar
+          -DgeneratePom=true
 
       - name: Build and deploy
         run: "mvn -f ./back-end/project-capstone/pom.xml clean package appengine:deploy"
