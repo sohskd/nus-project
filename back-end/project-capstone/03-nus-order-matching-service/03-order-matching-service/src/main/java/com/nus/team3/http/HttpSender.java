@@ -19,11 +19,11 @@ public class HttpSender {
     private static final Logger logger = LoggerFactory.getLogger(HttpSender.class);
 
     public HttpSender() {
+        logger.info("Running on JVM system property: isLocal={}", System.getProperty("isLocal"));
     }
 
     public void sendOrder(Order o){
         String url = ROOT_URL + SAVE_TXN_URL;
-        logger.info("Running on JVM system property: isLocal={}", System.getProperty("isLocal"));
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();
         HttpEntity httpEntity = new HttpEntity<>(o.toString(), httpHeaders);
