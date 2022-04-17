@@ -19,6 +19,7 @@ public class TransactionDao {
 
     public static String rootMapperPath = "com.nus.team3.mapper.TransactionHistoryMapper";
     public static String selectAllQuery = ".getAllTxnHist";
+    public static String selectAllUnmatchedQuery = ".getAllUnmatchedOrderInQueue";
     public static String saveTxnQuery = ".saveTxn";
 
     @Autowired
@@ -28,6 +29,11 @@ public class TransactionDao {
     @GetMapping("/getAllTxnHist")
     public List<Order> getAllTransactionHistories(){
         return sqlSessionTemplate.selectList(rootMapperPath + selectAllQuery);
+    }
+
+    @GetMapping("/getAllUnmatched")
+    public List<Order> getAllUnmatchedOrderInQueue(){
+        return sqlSessionTemplate.selectList(rootMapperPath + selectAllUnmatchedQuery);
     }
 
     @PostMapping("/saveTxn")
