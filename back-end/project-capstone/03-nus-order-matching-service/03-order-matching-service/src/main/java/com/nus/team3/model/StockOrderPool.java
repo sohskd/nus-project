@@ -87,6 +87,17 @@ public class StockOrderPool {
         matchedOrderQueue.add(sellOrder);
     }
 
+    public String cancelOrder(String transactionId){
+        boolean isRemovedInBuyQueue = buyQueue.values().removeIf(value -> value.equals(transactionId));
+        boolean isRemovedInSellQueue = sellQueue.values().removeIf(value -> value.equals(transactionId));
+        if (isRemovedInBuyQueue || isRemovedInSellQueue){
+            print();
+            return "Success";
+        }else{
+            return String.format("TransactionId %s not found in queue." , transactionId);
+        }
+    }
+
     public void print(){
         System.out.print(this.stockName + " B:");
         for (Order order:buyQueue.keySet()){

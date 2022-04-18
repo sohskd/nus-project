@@ -4,6 +4,7 @@ import com.amazonaws.services.sqs.AmazonSQSAsync;
 import com.amazonaws.services.sqs.model.SendMessageRequest;
 import com.amazonaws.services.sqs.model.SendMessageResult;
 import com.nus.team3.constants.TradeEnum;
+import com.nus.team3.model.MasterPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class Publisher {
 
 	@Value("${cloud.aws.end-point.seller.uri}")
 	private String sellQueueEndPoint;
+
+	@Autowired
+	private MasterPool masterPool;
 
 	@GetMapping("/testing")
 	public String sendTestMessage(){
@@ -57,5 +61,10 @@ public class Publisher {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@PostMapping("/cancel")
+	public String cancelOrder(@RequestBody String messageBody) {
+		return masterPool.cancelOrder(messageBody);
 	}
 }

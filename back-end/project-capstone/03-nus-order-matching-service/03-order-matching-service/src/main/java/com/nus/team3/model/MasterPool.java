@@ -17,6 +17,7 @@ import static com.nus.team3.dao.TransactionDao.selectAllUnmatchedQuery;
 public class MasterPool {
 
     private Map<String, StockOrderPool> stockMap = new HashMap<>();
+    private Map<String, String> transactionMap = new HashMap<>();
     private static final Logger logger = LoggerFactory.getLogger(MasterPool.class);
     private boolean isInit = false;
 
@@ -43,6 +44,14 @@ public class MasterPool {
             stockMap.put(o.getStockTicker(), new StockOrderPool(o.getStockTicker()));
         }
         stockMap.get(o.getStockTicker()).addByPriceByTimestamp(o);
+        transactionMap.put(o.getTransactionId(), o.getStockTicker());
+    }
+
+    public String cancelOrder(String transactionId){
+        if (!transactionMap.containsKey(transactionId)){
+            return String.format("TransactionId %s not found in queue." , transactionId);
+        }
+        return stockMap.get(transactionMap.get(transactionId)).cancelOrder(transactionId);
     }
 
     public void match(Order o){
