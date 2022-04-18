@@ -50,7 +50,7 @@ public class Order implements Comparable<Order>{
 
     @Override
     public int compareTo(Order o){
-        if (this.getBuyOrSell().equals(TradeEnum.SIDE.BUY.name())){
+        if (this.getBuyOrSell().equalsIgnoreCase(TradeEnum.SIDE.BUY.name())){
             return o.getPrice() - this.getPrice() != 0.00 ? (o.getPrice() - this.getPrice() > 0 ? 1 : -1) : (int)(this.getTimestamp() - o.getTimestamp());
         }else{
             return this.getPrice() - o.getPrice() != 0.00 ? (this.getPrice() - o.getPrice() > 0 ? 1 : -1): (int)(this.getTimestamp() - o.getTimestamp());
