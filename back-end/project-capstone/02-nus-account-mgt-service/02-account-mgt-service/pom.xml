@@ -67,7 +67,7 @@
         <version>2.2.0</version>
         <configuration>
           <version>1-0-1-account-mgt-service</version>
-          <projectId>GCLOUD_CONFIG</projectId>
+          <projectId>kianming1988</projectId>
         </configuration>
       </plugin>
     </plugins>

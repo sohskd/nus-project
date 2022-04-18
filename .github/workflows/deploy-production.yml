@@ -1,0 +1,46 @@
+name: Deploy to Production
+on:
+  push:
+    branches:
+      - production
+      - github-actions
+
+jobs:
+  deploy:
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    # NOTE Maven and GCloud SDK CLI are pre-installed on Github-hosted runners
+    # See https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-software for details
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Checkout
+        uses: "actions/checkout@v3"
+
+      - name: Install Maven artifacts
+        run: "mvn -f ./back-end/project-capstone/pom.xml -B -q install"
+
+      - name: Configure settings.xml
+        uses: whelk-io/maven-settings-xml-action@v20
+        with:
+          plugin_groups: >
+            [
+              "com.google.cloud.tools"
+            ]
+
+      - name: Build application package
+        run: "mvn -f ./back-end/project-capstone/pom.xml clean package"
+
+      - name: Decode service account file
+        env:
+          GCP_KEYFILE: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_GPG_PASSPHRASE }}
+        run: "echo $GCP_KEYFILE | gpg --batch --yes --passphrase-fd 0 --output google_application_credentials.json -d kianming1988-829d213afa53.json.gpg"
+
+      - name: Authorize gcloud CLI with service account
+        env:
+          GCP_KEYFILE: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_GPG_PASSPHRASE }}
+        run: "gcloud auth activate-service-account github-actions@kianming1988.iam.gserviceaccount.com --key-file=google_application_credentials.json --project=kianming1988"
+
+      - name: Deploy Accounts Service to App Engine
+        run: "mvn -f ./back-end/project-capstone/02-nus-account-mgt-service/02-account-mgt-service/pom.xml appengine:deploy"
