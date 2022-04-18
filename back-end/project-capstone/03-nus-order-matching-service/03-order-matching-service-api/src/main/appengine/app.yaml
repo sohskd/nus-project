@@ -1,4 +1,4 @@
-service: order-matching
+service: api
 runtime: java
 env: flex
 runtime_config:
