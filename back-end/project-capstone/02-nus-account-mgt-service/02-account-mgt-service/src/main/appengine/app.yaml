@@ -14,7 +14,7 @@ resources:
   disk_size_gb: 10
 network:
   forwarded_ports:
-    - 8888/tcp
+    - 80:8888
 
 #env_variables:
 #  SPRING_PROFILES_ACTIVE: "gcp"
