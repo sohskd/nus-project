@@ -35,7 +35,7 @@ jobs:
       - name: Decode service account file
         env:
           GCP_KEYFILE: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_GPG_PASSPHRASE }}
-        run: "echo $GCP_KEYFILE | gpg --batch --yes --passphrase-fd 0 --output google_application_credentials.json -d kianming1988-dfd07a8208e9.json.gpg"
+        run: "echo $GCP_KEYFILE | gpg --batch --yes --passphrase-fd 0 --output google_application_credentials.json -d kianming1988-829d213afa53.json.gpg"
 
       - name: Authorize gcloud CLI with service account
         env:
