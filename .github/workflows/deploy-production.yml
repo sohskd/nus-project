@@ -40,7 +40,7 @@ jobs:
       - name: Authorize gcloud CLI with service account
         env:
           GCP_KEYFILE: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_GPG_PASSPHRASE }}
-        run: "gcloud auth activate-service-account kianming1988@appspot.gserviceaccount.com --key-file=google_application_credentials.json --project=kianming1988"
+        run: "gcloud auth activate-service-account github-actions@kianming1988.iam.gserviceaccount.com --key-file=google_application_credentials.json --project=kianming1988"
 
       - name: Deploy to App Engine
         run: "mvn -f ./back-end/project-capstone/pom.xml appengine:deploy"
