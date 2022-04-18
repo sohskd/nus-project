@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 public class HttpSender {
 
     public boolean IS_LOCAL = Boolean.parseBoolean(System.getProperty("isLocal"));
-    public final String ROOT_URL = IS_LOCAL ? "http://localhost:9091": "http://<your_gcp_host>:<your_gcp_port>";
+    public final String ROOT_URL = IS_LOCAL ? "http://localhost:9091": "https://kianming1988.appspot.com";
     public final String SAVE_TXN_URL = "/transaction/saveTxn";
 
     private static final Logger logger = LoggerFactory.getLogger(HttpSender.class);
