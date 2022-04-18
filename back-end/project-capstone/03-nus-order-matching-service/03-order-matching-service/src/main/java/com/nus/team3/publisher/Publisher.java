@@ -4,13 +4,20 @@ import com.amazonaws.services.sqs.AmazonSQSAsync;
 import com.amazonaws.services.sqs.model.SendMessageRequest;
 import com.amazonaws.services.sqs.model.SendMessageResult;
 import com.nus.team3.constants.TradeEnum;
+import com.nus.team3.dto.Order;
 import com.nus.team3.model.MasterPool;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.aws.messaging.core.QueueMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+import static com.nus.team3.dao.TransactionDao.*;
 
 @RestController
 @RequestMapping("/ordermatching")
@@ -20,6 +27,10 @@ public class Publisher {
 
 	@Autowired
 	private QueueMessagingTemplate queueMessagingTemplate;
+
+	@Autowired
+	@Qualifier("mysqlSqlSessionTemplate")
+	private SqlSessionTemplate sqlSessionTemplate;
 
 	@Autowired
 	private AmazonSQSAsync amazonSQSAsync;
@@ -64,7 +75,19 @@ public class Publisher {
 	}
 
 	@PostMapping("/cancel")
-	public String cancelOrder(@RequestBody String messageBody) {
-		return masterPool.cancelOrder(messageBody);
+	public String cancelOrder(@RequestBody String transactionId) {
+		try{
+			String cancelStatus = masterPool.cancelOrder(transactionId);
+			if (cancelStatus.equals("Success")){
+				List<Order> orders = sqlSessionTemplate.selectList(rootMapperPath + selectSingleTxnQuery, transactionId);
+				for (Order o: orders){
+					o.setMatchStatus(TradeEnum.STATUS.CANCELLED.name());
+					sqlSessionTemplate.insert(rootMapperPath + saveTxnQuery, o);
+				}
+			}
+			return cancelStatus;
+		} catch (Exception e) {
+			return e.toString();
+		}
 	}
 }
