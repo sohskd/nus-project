@@ -18,7 +18,6 @@ public class MasterPool {
 
     private Map<String, StockOrderPool> stockMap = new HashMap<>();
     private Map<String, String> transactionMap = new HashMap<>();
-    private static final Logger logger = LoggerFactory.getLogger(MasterPool.class);
     private boolean isInit = false;
 
     @Autowired

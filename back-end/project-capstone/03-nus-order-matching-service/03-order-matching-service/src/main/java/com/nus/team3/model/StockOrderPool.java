@@ -14,8 +14,8 @@ public class StockOrderPool {
 
     private static final Logger logger = LoggerFactory.getLogger(StockOrderPool.class);
 
-    private TreeMap<Order,String> buyQueue = new TreeMap<Order, String>();
-    private TreeMap<Order,String> sellQueue = new TreeMap<Order, String>();
+    private TreeMap<Order,String> buyQueue = new TreeMap<>();
+    private TreeMap<Order,String> sellQueue = new TreeMap<>();
     private List<Order> matchedOrderQueue = new ArrayList<>();
     private String stockName;
 

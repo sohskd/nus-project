@@ -1,7 +1,6 @@
 package com.nus.team3.utils;
 
 import com.nus.team3.constants.TradeEnum;
-import com.nus.team3.subscriber.Subscriber;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,8 +15,6 @@ class OrderConstructionTest {
     private String quantity = "1";
     private String price = "101.2";
     private String user = "777";
-
-    private final Subscriber subscriber = new Subscriber();
 
     @BeforeEach
     void setUpMessage(){
