@@ -1,6 +1,7 @@
-package com.nus.team3.subscriber;
+package com.nus.team3.utils;
 
 import com.nus.team3.constants.TradeEnum;
+import com.nus.team3.subscriber.Subscriber;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,25 +39,25 @@ class OrderConstructionTest {
 
     @Test
     void test_constructOrderWithExpectedParams() {
-        assertEquals(this.side, subscriber.constructOrder(message).getBuyOrSell());
-        assertEquals(this.stock, subscriber.constructOrder(message).getStockTicker());
+        assertEquals(this.side, Utils.constructOrder(message).getBuyOrSell());
+        assertEquals(this.stock, Utils.constructOrder(message).getStockTicker());
         assertEquals(Integer.parseInt(this.quantity),
-                subscriber.constructOrder(message).getQuantity());
+                Utils.constructOrder(message).getQuantity());
         assertEquals(Float.parseFloat(String.format("%.2f", Double.valueOf(this.price))),
-                subscriber.constructOrder(message).getPrice());
+                Utils.constructOrder(message).getPrice());
         assertEquals(Integer.parseInt(this.user),
-                subscriber.constructOrder(message).getUser());
-        assertEquals(TradeEnum.STATUS.UNMATCHED.name(), subscriber.constructOrder(message).getMatchStatus());
-        assertEquals("", subscriber.constructOrder(message).getTransactionIdAfterMatch());
-        assertNotNull(subscriber.constructOrder(message).getTimestamp());
-        assertNotNull(subscriber.constructOrder(message).getTransactionId());
+                Utils.constructOrder(message).getUser());
+        assertEquals(TradeEnum.STATUS.UNMATCHED.name(), Utils.constructOrder(message).getMatchStatus());
+        assertEquals("", Utils.constructOrder(message).getTransactionIdAfterMatch());
+        assertNotNull(Utils.constructOrder(message).getTimestamp());
+        assertNotNull(Utils.constructOrder(message).getTransactionId());
     }
 
     @Test
     void test_orderWithInvalidSide() {
         this.side = "Unknown";
         setMessage(this.side ,this.stock ,this.quantity, this.price , this.user);
-        assertNull(subscriber.constructOrder(message));
+        assertNull(Utils.constructOrder(message));
     }
 
     @Test
@@ -65,7 +66,7 @@ class OrderConstructionTest {
         for (String invalidStr: invalidQtyString){
             this.quantity = invalidStr;
             setMessage(this.side ,this.stock ,this.quantity, this.price , this.user);
-            assertNull(subscriber.constructOrder(message));
+            assertNull(Utils.constructOrder(message));
         }
     }
 
@@ -75,7 +76,7 @@ class OrderConstructionTest {
         for (String invalidStr: invalidPriceString){
             this.price = invalidStr;
             setMessage(this.side ,this.stock ,this.quantity, this.price , this.user);
-            assertNull(subscriber.constructOrder(message));
+            assertNull(Utils.constructOrder(message));
         }
     }
 
@@ -85,7 +86,7 @@ class OrderConstructionTest {
         for (String invalidStr: invalidUserString){
             this.user = invalidStr;
             setMessage(this.side ,this.stock ,this.quantity, this.price , this.user);
-            assertNull(subscriber.constructOrder(message));
+            assertNull(Utils.constructOrder(message));
         }
     }
 

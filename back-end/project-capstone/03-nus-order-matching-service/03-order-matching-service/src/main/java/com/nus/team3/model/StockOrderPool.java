@@ -118,4 +118,17 @@ public class StockOrderPool {
         }
         System.out.println();
     }
+
+    public TreeMap<Order, String> getBuyQueue() {
+        return buyQueue;
+    }
+
+    public TreeMap<Order, String> getSellQueue() {
+        return sellQueue;
+    }
+
+    public List<Order> getMatchedOrderQueue() {
+        return matchedOrderQueue;
+    }
+
 }

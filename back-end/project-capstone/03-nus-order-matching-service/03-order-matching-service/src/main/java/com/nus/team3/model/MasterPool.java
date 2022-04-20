@@ -64,4 +64,7 @@ public class MasterPool {
         }
     }
 
+    public void setInit(boolean init) {
+        isInit = init;
+    }
 }
