@@ -13,20 +13,25 @@ import org.springframework.web.client.RestTemplate;
 public class HttpSender {
 
     public boolean IS_LOCAL = Boolean.parseBoolean(System.getProperty("isLocal"));
-    public final String ROOT_URL = IS_LOCAL ? "http://localhost:9091": "https://kianming1988.appspot.com";
+    public boolean IS_TEST_ENV = Boolean.parseBoolean(System.getProperty("isTestEnv"));
+    public final String ROOT_URL = IS_LOCAL ? "http://localhost:8080": "https://kianming1988.appspot.com";
     public final String SAVE_TXN_URL = "/transaction/saveTxn";
 
     private static final Logger logger = LoggerFactory.getLogger(HttpSender.class);
 
     public HttpSender() {
-        logger.info("Running on JVM system property: isLocal={}", System.getProperty("isLocal"));
+        logger.info("Running on JVM system property: isLocal={}, isTestEnv={}",
+                System.getProperty("isLocal"),
+                System.getProperty("isTestEnv"));
     }
 
     public void sendOrder(Order o){
-        String url = ROOT_URL + SAVE_TXN_URL;
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders httpHeaders = new HttpHeaders();
-        HttpEntity httpEntity = new HttpEntity<>(o.toString(), httpHeaders);
-        ResponseEntity result = restTemplate.exchange(url, HttpMethod.POST, httpEntity, JsonNode.class);
+        if (!IS_TEST_ENV){
+            String url = ROOT_URL + SAVE_TXN_URL;
+            RestTemplate restTemplate = new RestTemplate();
+            HttpHeaders httpHeaders = new HttpHeaders();
+            HttpEntity httpEntity = new HttpEntity<>(o.toString(), httpHeaders);
+            ResponseEntity result = restTemplate.exchange(url, HttpMethod.POST, httpEntity, JsonNode.class);
+        }
     }
 }
