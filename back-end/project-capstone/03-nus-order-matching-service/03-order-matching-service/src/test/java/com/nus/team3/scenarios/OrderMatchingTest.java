@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
 public class OrderMatchingTest {
 
     private MasterPool masterPool;
@@ -53,4 +52,47 @@ public class OrderMatchingTest {
         assertEquals(0, masterPool.getStockMap().get("MSFT").getSellQueue().size());
     }
 
+    @Test
+    public void test_whenOrderGetPartiallyMatched(){
+        Order buyOrder_1 = constructOrder("BUY", "MSFT", "2", "101.2", "777");
+        Order sellOrder_1 = constructOrder("SELL", "MSFT", "1", "101.1", "777");
+        masterPool.addOrder(buyOrder_1);
+        masterPool.match(buyOrder_1);
+        masterPool.addOrder(sellOrder_1);
+        masterPool.match(sellOrder_1);
+        assertEquals(1, masterPool.getStockMap().get("MSFT").getBuyQueue().size());
+        assertEquals(0, masterPool.getStockMap().get("MSFT").getSellQueue().size());
+    }
+
+    @Test
+    public void test_whenOrderGetFullyMatched_OneToMany(){
+        Order buyOrder_1 = constructOrder("BUY", "MSFT", "2", "101.2", "777");
+        Order sellOrder_1 = constructOrder("SELL", "MSFT", "1", "101.1", "777");
+        Order sellOrder_2 = constructOrder("SELL", "MSFT", "1", "101.1", "888");
+        masterPool.addOrder(buyOrder_1);
+        masterPool.match(buyOrder_1);
+        masterPool.addOrder(sellOrder_1);
+        masterPool.match(sellOrder_1);
+        masterPool.addOrder(sellOrder_2);
+        masterPool.match(sellOrder_2);
+        assertEquals(0, masterPool.getStockMap().get("MSFT").getBuyQueue().size());
+        assertEquals(0, masterPool.getStockMap().get("MSFT").getSellQueue().size());
+    }
+
+    @Test
+    public void test_whenOrderGetFullyMatched_FirstComeFirstServe(){
+        Order buyOrder_1 = constructOrder("BUY", "MSFT", "1", "101.2", "777");
+        Order buyOrder_2 = constructOrder("BUY", "MSFT", "1", "101.2", "888");
+        Order sellOrder_1 = constructOrder("SELL", "MSFT", "1", "101.1", "999");
+        masterPool.addOrder(buyOrder_1);
+        masterPool.match(buyOrder_1);
+        masterPool.addOrder(buyOrder_2);
+        masterPool.match(buyOrder_2);
+        masterPool.addOrder(sellOrder_1);
+        masterPool.match(sellOrder_1);
+        assertEquals(1, masterPool.getStockMap().get("MSFT").getBuyQueue().size());
+        assertEquals(0, masterPool.getStockMap().get("MSFT").getSellQueue().size());
+        // 2nd buyOrder left out in the queue as it comes late
+        assertEquals(888, masterPool.getStockMap().get("MSFT").getBuyQueue().firstKey().getUser());
+    }
 }
