@@ -66,4 +66,9 @@ public class MasterPool {
     public void setInit(boolean init) {
         isInit = init;
     }
+
+    public Map<String, StockOrderPool> getStockMap() {
+        return stockMap;
+    }
+
 }
