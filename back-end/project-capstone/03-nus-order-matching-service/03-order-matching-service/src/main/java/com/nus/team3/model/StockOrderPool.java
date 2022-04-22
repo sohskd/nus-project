@@ -14,8 +14,8 @@ public class StockOrderPool {
 
     private static final Logger logger = LoggerFactory.getLogger(StockOrderPool.class);
 
-    private TreeMap<Order,String> buyQueue = new TreeMap<Order, String>();
-    private TreeMap<Order,String> sellQueue = new TreeMap<Order, String>();
+    private TreeMap<Order,String> buyQueue = new TreeMap<>();
+    private TreeMap<Order,String> sellQueue = new TreeMap<>();
     private List<Order> matchedOrderQueue = new ArrayList<>();
     private String stockName;
 
@@ -87,6 +87,17 @@ public class StockOrderPool {
         matchedOrderQueue.add(sellOrder);
     }
 
+    public String cancelOrder(String transactionId){
+        boolean isRemovedInBuyQueue = buyQueue.values().removeIf(value -> value.equals(transactionId));
+        boolean isRemovedInSellQueue = sellQueue.values().removeIf(value -> value.equals(transactionId));
+        if (isRemovedInBuyQueue || isRemovedInSellQueue){
+            print();
+            return "Success";
+        }else{
+            return String.format("TransactionId %s not found in queue." , transactionId);
+        }
+    }
+
     public void print(){
         System.out.print(this.stockName + " B:");
         for (Order order:buyQueue.keySet()){
@@ -107,4 +118,17 @@ public class StockOrderPool {
         }
         System.out.println();
     }
+
+    public TreeMap<Order, String> getBuyQueue() {
+        return buyQueue;
+    }
+
+    public TreeMap<Order, String> getSellQueue() {
+        return sellQueue;
+    }
+
+    public List<Order> getMatchedOrderQueue() {
+        return matchedOrderQueue;
+    }
+
 }
