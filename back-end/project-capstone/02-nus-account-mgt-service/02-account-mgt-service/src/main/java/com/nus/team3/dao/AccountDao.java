@@ -26,13 +26,28 @@ public class AccountDao {
     private SqlSessionTemplate sqlSessionTemplate;
 
     @GetMapping("/getUserInfo")
-    public List<User> getAllUser(){
+    public List<User> getUserInfo(){
         return sqlSessionTemplate.selectList(rootMapperPath + selectAllQuery);
     }
+
+    @PostMapping("/createNewAccount")
+    public void createNewAccound(){
+
+    }
+    @PostMapping("/updateLoggon_i")
+    public void updateLoggon_i(){
+
+
+    }
+    
+
+
+
     @GetMapping("/testing")
     public String testing(){
         return "hello world";
     }
+
 
     
 }
