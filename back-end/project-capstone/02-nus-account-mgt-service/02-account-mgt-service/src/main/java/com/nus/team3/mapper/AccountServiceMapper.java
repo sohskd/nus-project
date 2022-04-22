@@ -27,7 +27,7 @@ public interface AccountServiceMapper {
            "#{email}," +
            "#{name}," +
            "#{password})")
-    public void createUserAccount(User user);
+    public void createNewAccount(User user);
      
     @Update({
             "<script>",
@@ -35,9 +35,27 @@ public interface AccountServiceMapper {
             "<set>",
             "<loggon_i = 1>",
             "</set>",
+            "</set>",
+            "<where>",
+            "username =#{username}",
+            "</where>",
             "</script>"
 
     })
-    void updateLoggin_i (User loggon_i);
+    void userLogon (@Param("username") boolean loggon_i);
+
+    @Update({
+            "<script>",
+            "UPDATE user_account_tab",
+            "<set>",
+            "<loggon_i = 0>",
+            "</set>",
+            "<where>",
+            "username =#{username}",
+            "</where>",
+            "</script>"
+
+    })
+    void userLogoff (@Param("username") boolean loggon_i);
 
 }
