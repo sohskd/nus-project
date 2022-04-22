@@ -43,7 +43,7 @@ jobs:
         run: "gcloud auth activate-service-account github-actions@kianming1988.iam.gserviceaccount.com --key-file=google_application_credentials.json --project=kianming1988"
 
       - name: Deploy Forums Service to App Engine
-        run: "mvn -f ./back-end/project-capstone/05-forums/pom.xml appengine:deploy"
+        run: "mvn -f ./back-end/project-capstone/05-forums/pom.xml -Dcommit_hash=${GITHUB_SHA::7} appengine:deploy"
 
       - name: Deploy Accounts Service to App Engine
         run: "mvn -f ./back-end/project-capstone/02-nus-account-mgt-service/02-account-mgt-service/pom.xml appengine:deploy"
