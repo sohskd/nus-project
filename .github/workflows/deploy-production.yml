@@ -18,16 +18,11 @@ jobs:
       - name: Checkout
         uses: "actions/checkout@v3"
 
-      - name: Install Maven artifacts
+      - name: Build & Install Maven artifacts
         run: "mvn -f ./back-end/project-capstone/pom.xml -B --no-transfer-progress -Dmaven.test.skip=true install"
 
-      - name: Configure settings.xml
-        uses: whelk-io/maven-settings-xml-action@v20
-        with:
-          plugin_groups: >
-            [
-              "com.google.cloud.tools"
-            ]
+      - name: Update gcloud CLI tools
+        run: "gcloud components update"
 
       - name: Decode service account file
         env:
@@ -38,6 +33,14 @@ jobs:
         env:
           GCP_KEYFILE: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_GPG_PASSPHRASE }}
         run: "gcloud auth activate-service-account github-actions@kianming1988.iam.gserviceaccount.com --key-file=google_application_credentials.json --project=kianming1988"
+
+      - name: Configure settings.xml
+        uses: whelk-io/maven-settings-xml-action@v20
+        with:
+          plugin_groups: >
+            [
+              "com.google.cloud.tools"
+            ]
 
       - name: Deploy Accounts Service to App Engine
         run: "mvn -f ./back-end/project-capstone/02-nus-account-mgt-service/02-account-mgt-service/pom.xml --no-transfer-progress -Dapp_version=commit-${GITHUB_SHA::7} clean package appengine:deploy"
