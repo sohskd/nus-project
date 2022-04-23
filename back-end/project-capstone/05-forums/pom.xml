@@ -73,7 +73,7 @@
 				<artifactId>appengine-maven-plugin</artifactId>
 				<version>2.2.0</version>
 				<configuration>
-					<version>${commit_hash}</version>
+					<version>${app_version}</version>
 					<projectId>kianming1988</projectId>
 				</configuration>
 			</plugin>
