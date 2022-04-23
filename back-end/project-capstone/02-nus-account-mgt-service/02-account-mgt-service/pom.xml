@@ -12,7 +12,13 @@
     <groupId>com.nus.team3</groupId>
     <artifactId>02-account-mgt-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <java.version>1.8</java.version>
+        <spring-cloud-gcp.version>3.2.1</spring-cloud-gcp.version>
+        <spring-cloud.version>2021.0.1</spring-cloud.version>
+    </properties>
     <profiles>
         <profile>
             <id>cloud-gcp</id>
