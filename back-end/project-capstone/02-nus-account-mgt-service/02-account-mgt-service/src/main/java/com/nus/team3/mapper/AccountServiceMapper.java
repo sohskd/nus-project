@@ -15,47 +15,48 @@ public interface AccountServiceMapper {
     @Results({
             @Result(property = "id", column = "id"),
             @Result(property = "email", column = "email"),
-            @Result(property = "name", column = "name"),
+            @Result(property = "username", column = "username"),
             @Result(property = "password", column = "password"),
             @Result(property = "loggon_i", column = "loggon_i"),
            
     })
     List<User> getUserInfo(Integer id);
 
-    @Insert("Insert into user_account_tab (id,email,name,password)" +
-           "values (#{id}," +
+    @Insert("Insert into user_account_tab (email,username,password,loggon_i)" +
+           "values (" +
            "#{email}," +
-           "#{name}," +
-           "#{password})")
+           "#{username}," +
+           "#{password}," +
+           "#{loggon_i})")
     public void createNewAccount(User user);
      
-    @Update({
-            "<script>",
-            "UPDATE user_account_tab",
-            "<set>",
-            "<loggon_i = 1>",
-            "</set>",
-            "</set>",
-            "<where>",
-            "username =#{username}",
-            "</where>",
-            "</script>"
+//     @Update({
+//             "<script>",
+//             "UPDATE user_account_tab",
+//             "<set>",
+//             "<loggon_i = 1>",
+//             "</set>",
+//             "</set>",
+//             "<where>",
+//             "username =#{username}",
+//             "</where>",
+//             "</script>"
 
-    })
-    void userLogon (@Param("username") boolean loggon_i);
+//     })
+//     public void userLogon (@Param("username") boolean loggon_i);
 
-    @Update({
-            "<script>",
-            "UPDATE user_account_tab",
-            "<set>",
-            "<loggon_i = 0>",
-            "</set>",
-            "<where>",
-            "username =#{username}",
-            "</where>",
-            "</script>"
+//     @Update({
+//             "<script>",
+//             "UPDATE user_account_tab",
+//             "<set>",
+//             "<loggon_i = 0>",
+//             "</set>",
+//             "<where>",
+//             "username =#{username}",
+//             "</where>",
+//             "</script>"
 
-    })
-    void userLogoff (@Param("username") boolean loggon_i);
+//     })
+//     void userLogoff (@Param("username") boolean loggon_i);
 
 }

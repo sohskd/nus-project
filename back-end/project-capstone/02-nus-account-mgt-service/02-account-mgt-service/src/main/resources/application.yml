@@ -1,14 +1,11 @@
+spring:
+  application:
+    name: Account-Management-service
+  profiles:
+    active: dev
+
 server:
   port: 8080
-
-bs:
-  mysql:
-    driver: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://staging.omni-trade.xyz:3306/account_service_db?characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
-    username: root
-    password: uXxck2LbP!bTE^2_
-    pool:
-      name: order-mysql
 
 management:
   endpoints:

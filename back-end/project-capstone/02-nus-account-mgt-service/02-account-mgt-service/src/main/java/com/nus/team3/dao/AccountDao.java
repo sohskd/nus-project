@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import com.mysql.cj.util.StringUtils;
 import com.nus.team3.dto.User;
 
@@ -37,18 +35,20 @@ public class AccountDao {
     }
 
     @PostMapping("/createNewAccount")
-    public int createNewAccound(@RequestBody User user){
-        User user = new User;
+    public int createNewAccount(@RequestBody String messageBody){
+        String[] messageBodyList = messageBody.split("#");
+        User user = new User(messageBodyList[0],
+                             messageBodyList[1],
+                             messageBodyList[2],
+                             Boolean.parseBoolean(messageBodyList[3]));
         sqlSessionTemplate.insert(rootMapperPath + createUserQuery, user);
         return 1;
     }
 
     @PostMapping("/userLogon")
     public String userLogon(@RequestParam("username") String username,
-                            @RequestParam("password") String password,
-                            Map<String, Object> map, HttpSession session){ //not sure should have one more session class or not
+                            @RequestParam("password") String password){ 
                 if(!StringUtils.isNullOrEmpty(username) &&"123456".equals(password)){ //hardcode password
-                    session.setAttribute("loginUser",username);
                     sqlSessionTemplate.insert(rootMapperPath + updateLoggon_iQuery, username);
                     return"redirect:main.html";
                 }else{
