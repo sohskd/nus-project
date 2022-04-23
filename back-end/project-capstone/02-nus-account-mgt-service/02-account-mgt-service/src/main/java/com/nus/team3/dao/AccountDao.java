@@ -38,8 +38,8 @@ public class AccountDao {
 
     @PostMapping("/createNewAccount")
     public int createNewAccound(@RequestBody User user){
-        User user = new User;
-        sqlSessionTemplate.insert(rootMapperPath + createUserQuery, user);
+        User newUser = new User();
+        sqlSessionTemplate.insert(rootMapperPath + createUserQuery, newUser);
         return 1;
     }
 
