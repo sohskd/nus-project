@@ -25,6 +25,7 @@
             </dependencies>
         </profile>
     </profiles>
+    
     <dependencies>
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
