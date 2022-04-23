@@ -6,7 +6,6 @@
     <artifactId>01-dependencies</artifactId>
     <groupId>com.nus.team3</groupId>
     <version>0.0.1-SNAPSHOT</version>
-    <relativePath>../../01-dependencies/pom.xml</relativePath>
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
