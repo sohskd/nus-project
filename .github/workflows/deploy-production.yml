@@ -21,9 +21,6 @@ jobs:
       - name: Build & Install Maven artifacts
         run: "mvn -f ./back-end/project-capstone/pom.xml -B --no-transfer-progress -Dmaven.test.skip=true install"
 
-      - name: Update gcloud CLI tools
-        run: "gcloud components update"
-
       - name: Decode service account file
         env:
           GCP_KEYFILE: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_GPG_PASSPHRASE }}
