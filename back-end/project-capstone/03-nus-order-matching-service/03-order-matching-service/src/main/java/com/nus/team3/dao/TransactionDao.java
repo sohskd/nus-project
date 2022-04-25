@@ -21,6 +21,7 @@ public class TransactionDao {
     public static String selectAllQuery = ".getAllTxnHist";
     public static String selectAllUnmatchedQuery = ".getAllUnmatchedOrderInQueue";
     public static String selectSingleTxnQuery = ".getTxn";
+    public static String selectSingleMatchedTxnQuery = ".getMatchedTxn";
     public static String saveTxnQuery = ".saveTxn";
 
     @Autowired
@@ -42,6 +43,11 @@ public class TransactionDao {
         return sqlSessionTemplate.selectList(rootMapperPath + selectSingleTxnQuery, transactionId);
     }
 
+    @PostMapping("/getMatchedTxn")
+    public List<Order> getMatchedTransaction(@RequestBody String transactionId){
+        return sqlSessionTemplate.selectList(rootMapperPath + selectSingleMatchedTxnQuery, transactionId);
+    }
+
     @PostMapping("/saveTxn")
     public int saveTransaction(@RequestBody String messageBody) {
         String[] messageBodyList = messageBody.split("#");
@@ -58,8 +64,15 @@ public class TransactionDao {
         if (messageBodyList.length > 7 ){
             order.setTransactionIdAfterMatch(messageBodyList[7]);
         }
-        sqlSessionTemplate.insert(rootMapperPath + saveTxnQuery, order);
-        return 1;
+        List<Order> matchedOrders = sqlSessionTemplate.selectList(rootMapperPath + selectSingleMatchedTxnQuery, messageBodyList[1]);
+        if (matchedOrders.size() == 0){
+            sqlSessionTemplate.insert(rootMapperPath + saveTxnQuery, order);
+            return 0;
+        }
+        else{
+            logger.info("Not persist matched order {} as matched order already found in database", order.toString());
+            return 1;
+        }
     }
 
 }

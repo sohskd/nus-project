@@ -63,4 +63,18 @@ public interface TransactionHistoryMapper {
             @Result(property = "timestamp", column = "create_time"),
     })
     Order getTxn(String transactionId);
+
+    @Select("SELECT * FROM transaction_history_tab where transaction_id=#{transactionId} and status='MATCHED'")
+    @Results({
+            @Result(property = "user", column = "user_id"),
+            @Result(property = "stockTicker", column = "stock_ticker"),
+            @Result(property = "buyOrSell", column = "side"),
+            @Result(property = "price", column = "price"),
+            @Result(property = "quantity", column = "quantity"),
+            @Result(property = "matchStatus", column = "status"),
+            @Result(property = "transactionId", column = "transaction_id"),
+            @Result(property = "transactionIdAfterMatch", column = "transaction_id_after_match"),
+            @Result(property = "timestamp", column = "create_time"),
+    })
+    Order getMatchedTxn(String transactionId);
 }
