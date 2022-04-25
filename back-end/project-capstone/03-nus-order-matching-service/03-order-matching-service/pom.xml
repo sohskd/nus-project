@@ -19,6 +19,7 @@
         <java.version>1.8</java.version>
         <spring-cloud-gcp.version>3.2.1</spring-cloud-gcp.version>
         <spring-cloud.version>2021.0.1</spring-cloud.version>
+        <app_version>1-0-1</app_version>
     </properties>
 
     <dependencies>
@@ -61,12 +62,8 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-aws</artifactId>
-            <version>2.2.1.RELEASE</version>
+            <version>2.2.6.RELEASE</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.httpcomponents</groupId>
@@ -77,7 +74,7 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-aws-messaging</artifactId>
-            <version>2.2.1.RELEASE</version>
+            <version>2.2.6.RELEASE</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.apache.httpcomponents</groupId>
@@ -88,7 +85,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.5.13</version>
+            <version>4.5.8</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
