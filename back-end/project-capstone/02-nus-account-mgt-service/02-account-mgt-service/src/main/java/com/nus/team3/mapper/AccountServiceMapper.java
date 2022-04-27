@@ -11,24 +11,22 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface AccountServiceMapper {
-    @Select({"SELECT * FROM user_account_tab WHERE id=#{id}"})
+    @Select({"SELECT * FROM user_account_tab WHERE username=#{username}"})
     @Results({
-            @Result(property = "id", column = "id"),
-            @Result(property = "email", column = "email"),
             @Result(property = "username", column = "username"),
+            @Result(property = "email", column = "email"),
             @Result(property = "password", column = "password"),
             @Result(property = "loggon_i", column = "loggon_i"),
            
     })
-    List<User> getUserInfo(Integer id);
+    List<User> getUserInfo(String username);
 
-    @Insert("Insert into user_account_tab (email,username,password,loggon_i)" +
-           "values (" +
+    @Insert("Insert into user_account_tab (username,email,password,loggon_i)" +
+           "values (#{username}," +
            "#{email}," +
-           "#{username}," +
            "#{password}," +
            "#{loggon_i})")
-    public void createNewAccount(User user);
+    public Integer createNewAccount(User user);
      
 //     @Update({
 //             "<script>",

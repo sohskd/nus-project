@@ -30,8 +30,8 @@ public class AccountDao {
     private SqlSessionTemplate sqlSessionTemplate;
 
     @GetMapping("/getUserInfo")
-    public List<User> getUserInfo(){
-        return sqlSessionTemplate.selectList(rootMapperPath + selectUserQuery);
+    public List<User> getUserInfo(@RequestBody String username){
+        return sqlSessionTemplate.selectList(rootMapperPath + selectUserQuery, username);
     }
 
     @PostMapping("/createNewAccount")
