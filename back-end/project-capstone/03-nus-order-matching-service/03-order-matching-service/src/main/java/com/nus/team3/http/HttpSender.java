@@ -14,7 +14,7 @@ public class HttpSender {
 
     public boolean IS_LOCAL = Boolean.parseBoolean(System.getProperty("isLocal"));
     public boolean IS_TEST_ENV = Boolean.parseBoolean(System.getProperty("isTestEnv"));
-    public final String ROOT_URL = IS_LOCAL ? "http://localhost:8080": "https://kianming1988.appspot.com";
+    public final String ROOT_URL = IS_LOCAL ? "http://localhost:8080": "https://orders-dot-kianming1988.appspot.com/";
     public final String SAVE_TXN_URL = "/transaction/saveTxn";
 
     private static final Logger logger = LoggerFactory.getLogger(HttpSender.class);

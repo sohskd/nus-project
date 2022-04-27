@@ -4,6 +4,7 @@ import com.nus.team3.dto.Order;
 import com.nus.team3.model.MasterPool;
 import com.nus.team3.utils.Utils;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -79,6 +80,7 @@ public class OrderMatchingTest {
         assertEquals(0, masterPool.getStockMap().get("MSFT").getSellQueue().size());
     }
 
+    @Disabled
     @Test
     public void test_whenOrderGetFullyMatched_FirstComeFirstServe(){
         Order buyOrder_1 = constructOrder("BUY", "MSFT", "1", "101.2", "777");
