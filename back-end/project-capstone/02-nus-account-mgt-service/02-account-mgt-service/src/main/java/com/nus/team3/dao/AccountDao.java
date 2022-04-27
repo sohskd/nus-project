@@ -24,7 +24,8 @@ public class AccountDao {
     private String rootMapperPath = "com.nus.team3.mapper.AccountServiceMapper";
     private String selectUserQuery = ".getUserInfo";
     private String createUserQuery = ".createNewAccount";
-    private String updateLoggon_iQuery = ".userLogon";
+    private String updateLoggon_i_1 = ".userLogon";
+    private String updateLoggon_i_0 = ".userLogoff";
 
     
     @Autowired
@@ -32,8 +33,8 @@ public class AccountDao {
     private SqlSessionTemplate sqlSessionTemplate;
 
     @GetMapping("/getUserInfo")
-    public List<User> getUserInfo(){
-        return sqlSessionTemplate.selectList(rootMapperPath + selectUserQuery);
+    public List<User> getUserInfo(Integer id){
+        return sqlSessionTemplate.selectList(rootMapperPath + selectUserQuery, id);
     }
 
     @PostMapping("/createNewAccount")
@@ -43,20 +44,17 @@ public class AccountDao {
         return 1;
     }
 
-    @PostMapping("/userLogon")
-    public String userLogon(@RequestParam("username") String username,
-                            @RequestParam("password") String password,
-                            Map<String, Object> map, HttpSession session){ //not sure should have one more session class or not
-                if(!StringUtils.isNullOrEmpty(username) &&"123456".equals(password)){ //hardcode password
-                    session.setAttribute("loginUser",username);
-                    sqlSessionTemplate.insert(rootMapperPath + updateLoggon_iQuery, username);
-                    return"redirect:main.html";
-                }else{
-                    return "Loggin Failed";
-                }
+    @PutMapping("/userLogon")
+    public void userLogon(@RequestParam("username") String username,
+                            @RequestParam("password") String password){
+        sqlSessionTemplate.update(rootMapperPath + updateLoggon_i_1, username);                       
+                            
     }
 
-
+    @PutMapping("/userLogoff")
+    public void userLogoff(@RequestParam("username") String username){
+        sqlSessionTemplate.update(rootMapperPath + updateLoggon_i_0, username);
+    }
 
     @GetMapping("/testing")
     public String testing(){
