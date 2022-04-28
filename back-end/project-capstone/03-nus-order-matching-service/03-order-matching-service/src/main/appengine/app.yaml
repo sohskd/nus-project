@@ -5,4 +5,4 @@ runtime_config:
   jdk: openjdk8
 instance_class: f1
 automatic_scaling:
-  min_instances: 1
+  min_num_instances: 1
