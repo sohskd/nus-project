@@ -1,5 +1,3 @@
-#runtime: java11
-#instance_class: F1
 service: accounts
 runtime: java
 env: flex
@@ -10,14 +8,5 @@ instance_class: b4
 manual_scaling:
   instances: 1
 
-#env_variables:
-#  SPRING_PROFILES_ACTIVE: "gcp"
-#handlers:
-#  - url: /.*
-#    script: this field is required, but ignored
-#manual_scaling:
-#  instances: 1
-#resources:
-#  cpu: 1
-#  memory_gb: 1
-#  disk_size_gb: 1
+liveness_check:
+  path: "/actuator/health"
