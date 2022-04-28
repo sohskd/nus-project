@@ -4,7 +4,7 @@ env: flex
 runtime_config:
   jdk: openjdk8
 manual_scaling:
-  instances: 1
+  instances: 3
 resources:
   cpu: 1
   memory_gb: 2
