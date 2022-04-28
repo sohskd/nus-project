@@ -19,7 +19,7 @@
         <java.version>1.8</java.version>
         <spring-cloud-gcp.version>3.2.1</spring-cloud-gcp.version>
         <spring-cloud.version>2021.0.1</spring-cloud.version>
-        <app_version>1-0-1</app_version>
+        <app_version>1-2-1</app_version>
     </properties>
 
     <dependencies>
@@ -92,6 +92,18 @@
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.6.3</version>
             <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.9.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.9.2</version>
         </dependency>
     </dependencies>
 

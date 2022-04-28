@@ -34,7 +34,7 @@ CREATE TABLE `stock_live_tab` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `stock_live_tab` VALUES ('MSFT',108,105,1649238460,1649238460);
-INSERT INTO `stock_live_tab` VALUES ('SEA',181,190,1649238460,1649238460);
+INSERT INTO `stock_live_tab` VALUES ('SE',181,190,1649238460,1649238460);
 
 
 drop table if exists `user_account_tab`;
