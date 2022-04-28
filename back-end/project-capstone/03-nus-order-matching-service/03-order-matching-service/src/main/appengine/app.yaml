@@ -3,6 +3,6 @@ runtime: java
 env: flex
 runtime_config:
   jdk: openjdk8
-instance_class: f1
+instance_class: f4
 automatic_scaling:
   min_num_instances: 1
