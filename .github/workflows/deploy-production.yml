@@ -44,13 +44,17 @@ jobs:
           find ./back-end/ -name "*.yml" -exec sed -i "s@__AWS_ACCESS_KEY__@${{ secrets.AWS_ACCESS_KEY }}@g" {} +
           find ./back-end/ -name "*.yml" -exec sed -i 's@__AWS_SECRET_KEY__@${{ secrets.AWS_SECRET_KEY }}@g' {} +
 
+      - name: Set RUNNER_READY env var to true 
+          echo "RUNNER_READY=true" >> "$GITHUB_ENV"
+
       - name: Deploy Accounts Service to App Engine
-        run: "mvn -f ./back-end/project-capstone/02-nus-account-mgt-service/02-account-mgt-service/pom.xml --no-transfer-progress -Dapp_version=commit-${GITHUB_SHA::7} clean package appengine:deploy"
+        if: env.RUNNER_READY == 'true'
+        run: "mvn -f ./back-end/project-capstone/02-nus-account-mgt-service/02-account-mgt-service/pom.xml --no-transfer-progress -Dapp_version=commit-${GITHUB_SHA::7} clean package appengine:deploy "
 
       - name: Deploy Order Matching Service to App Engine
-        if: always() # always run this step if previous step fails
+        if: env.RUNNER_READY == 'true'
         run: "mvn -f ./back-end/project-capstone/03-nus-order-matching-service/03-order-matching-service/pom.xml --no-transfer-progress -Dapp_version=commit-${GITHUB_SHA::7} clean package appengine:deploy"
 
       - name: Deploy Forums Service to App Engine
-        if: always() # always run this step if previous step fails
+        if: env.RUNNER_READY == 'true'
         run: "mvn -f ./back-end/project-capstone/05-forums/pom.xml --no-transfer-progress -Dapp_version=commit-${GITHUB_SHA::7} clean package appengine:deploy"
