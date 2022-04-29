@@ -4,8 +4,8 @@ server:
 cloud:
   aws:
     credentials:
-      access-key: ${AWS_ACCESS_KEY}
-      secret-key: ${AWS_SECRET_KEY}
+      access-key: __AWS_ACCESS_KEY__
+      secret-key: __AWS_SECRET_KEY__
     region:
       static: ap-southeast-2
       auto: false
