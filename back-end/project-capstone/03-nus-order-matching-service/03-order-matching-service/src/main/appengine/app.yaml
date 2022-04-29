@@ -7,6 +7,3 @@ runtime_config:
 instance_class: f4
 automatic_scaling:
   min_num_instances: 1
-
-liveness_check:
-  path: "/actuator/health"
