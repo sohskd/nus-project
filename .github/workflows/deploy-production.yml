@@ -45,7 +45,7 @@ jobs:
           find ./back-end/ -name "*.yml" -exec sed -i 's@__AWS_SECRET_KEY__@${{ secrets.AWS_SECRET_KEY }}@g' {} +
 
       - name: Set RUNNER_READY env var to true 
-          echo "RUNNER_READY=true" >> "$GITHUB_ENV"
+        run: echo "RUNNER_READY=true" >> "$GITHUB_ENV"
 
       - name: Deploy Accounts Service to App Engine
         if: env.RUNNER_READY == 'true'
