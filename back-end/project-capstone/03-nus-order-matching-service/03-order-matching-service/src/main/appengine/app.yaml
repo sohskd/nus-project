@@ -3,4 +3,6 @@ runtime: java11
 
 instance_class: f1
 automatic_scaling:
-  min_num_instances: 1
+  min_instances: 1
+  max_idle_instances: 1
+  min_idle_instances: 1
