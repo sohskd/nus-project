@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://staging.omni-trade.xyz:3306/account_service_db?characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
+    url: jdbc:mysql://34.142.159.154:3306/account_service_db?characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
     username: root
     password: uXxck2LbP!bTE^2_
     pool:
