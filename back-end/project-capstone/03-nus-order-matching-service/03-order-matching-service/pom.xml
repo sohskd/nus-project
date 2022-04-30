@@ -14,9 +14,9 @@
     <artifactId>03-order-matching-service</artifactId>
 
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-        <java.version>1.8</java.version>
+        <java.version>11</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
         <spring-cloud-gcp.version>3.2.1</spring-cloud-gcp.version>
         <spring-cloud.version>2021.0.1</spring-cloud.version>
     </properties>
