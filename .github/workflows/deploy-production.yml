@@ -58,3 +58,7 @@ jobs:
       - name: Deploy Forums Service to App Engine
         if: env.RUNNER_READY == 'true'
         run: "mvn -f ./back-end/project-capstone/05-forums/pom.xml --no-transfer-progress -Dapp_version=commit-${GITHUB_SHA::7} clean package appengine:deploy"
+
+      - name: Deploy routing and dispatch config to App Engine
+        if: env.RUNNER_READY == 'true'
+        run: "gcloud app deploy dispatch.yaml"
