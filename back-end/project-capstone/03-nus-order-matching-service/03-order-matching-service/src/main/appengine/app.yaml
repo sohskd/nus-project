@@ -1,7 +1,7 @@
 service: orders
 runtime: java11
 
-instance_class: f1
+instance_class: f2
 automatic_scaling:
   min_instances: 1
   max_idle_instances: 1
