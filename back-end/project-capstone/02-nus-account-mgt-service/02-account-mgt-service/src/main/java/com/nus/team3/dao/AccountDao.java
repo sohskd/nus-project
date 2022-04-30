@@ -12,7 +12,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import com.mysql.cj.util.StringUtils;
 import com.nus.team3.dto.User;
 
 @RestController
