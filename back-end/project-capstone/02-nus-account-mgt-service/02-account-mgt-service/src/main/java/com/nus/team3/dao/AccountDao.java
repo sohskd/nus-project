@@ -26,34 +26,47 @@ public class AccountDao {
     private String createUserQuery = ".createNewAccount";
     private String updateLoggon_i_1 = ".userLogon";
     private String updateLoggon_i_0 = ".userLogoff";
+    private String retrievePassword = ".validatePassword";
 
     
     @Autowired
     @Qualifier("mysqlSqlSessionTemplate")
     private SqlSessionTemplate sqlSessionTemplate;
 
-    @GetMapping("/getUserInfo")
-    public List<User> getUserInfo(Integer id){
-        return sqlSessionTemplate.selectList(rootMapperPath + selectUserQuery, id);
+    @PostMapping(value = "/getUserInfo", produces = "application/json")
+    public List<User> getUserInfo(@RequestBody String username){
+        logger.info("Username is {}", username);
+        return sqlSessionTemplate.selectList(rootMapperPath + selectUserQuery, username);
     }
 
-    @PostMapping("/createNewAccount")
+    @PostMapping(value="/createNewAccount", consumes = "application/json")
     public int createNewAccount(@RequestBody User user){
-        User newUser = new User();
-        sqlSessionTemplate.insert(rootMapperPath + createUserQuery, newUser);
+        logger.info("Username is {}", user.getUsername());
+        sqlSessionTemplate.insert(rootMapperPath + createUserQuery, user);
         return 1;
     }
 
-    @PutMapping("/userLogon")
-    public void userLogon(@RequestParam("username") String username,
-                            @RequestParam("password") String password){
-        sqlSessionTemplate.update(rootMapperPath + updateLoggon_i_1, username);                       
-                            
+    @PostMapping("/userLogon")
+    public String userLogon(@RequestBody String messageBody){
+        String[] messageBodyList = messageBody.split("#");
+        String username = messageBodyList[0];
+        String password = messageBodyList[1];
+        
+        List<String> retrievedPasswords = sqlSessionTemplate.selectList(rootMapperPath + retrievePassword, username);
+        if (password.equals(retrievedPasswords.get(0)) ) {
+            sqlSessionTemplate.update(rootMapperPath + updateLoggon_i_1, username);                       
+            return "Login successfully!";
+        }
+        else {
+            return "Login failed!";
+        }            
     }
 
-    @PutMapping("/userLogoff")
-    public void userLogoff(@RequestParam("username") String username){
+    @PutMapping("/userLogoff/{username}")
+    public int userLogoff(@PathVariable(value = "username") String username){
+        logger.info("Username is {}", username);
         sqlSessionTemplate.update(rootMapperPath + updateLoggon_i_0, username);
+        return 1;
     }
 
     @GetMapping("/testing")
