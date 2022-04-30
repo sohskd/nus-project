@@ -27,8 +27,6 @@ jobs:
         run: "echo $GCP_KEYFILE | gpg --batch --yes --passphrase-fd 0 --output google_application_credentials.json -d kianming1988-829d213afa53.json.gpg"
 
       - name: Authorize gcloud CLI with service account
-        env:
-          GCP_KEYFILE: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_GPG_PASSPHRASE }}
         run: "gcloud auth activate-service-account github-actions@kianming1988.iam.gserviceaccount.com --key-file=google_application_credentials.json --project=kianming1988"
 
       - name: Configure settings.xml
