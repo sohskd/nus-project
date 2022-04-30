@@ -59,4 +59,4 @@ jobs:
 
       - name: Deploy routing and dispatch config to App Engine
         if: env.RUNNER_READY == 'true'
-        run: "gcloud app deploy dispatch.yaml"
+        run: "gcloud app deploy --quiet dispatch.yaml"
