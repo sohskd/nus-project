@@ -19,7 +19,6 @@
         <java.version>1.8</java.version>
         <spring-cloud-gcp.version>3.2.1</spring-cloud-gcp.version>
         <spring-cloud.version>2021.0.1</spring-cloud.version>
-        <app_version>1-2-1</app_version>
     </properties>
 
     <dependencies>
@@ -148,7 +147,7 @@
                 <artifactId>appengine-maven-plugin</artifactId>
                 <version>2.2.0</version>
                 <configuration>
-                    <version>${app_version}</version>
+                    <version>1-2-1</version>
                     <projectId>kianming1988</projectId>
                 </configuration>
             </plugin>
@@ -177,6 +176,17 @@
                     <version>1.0.0.RELEASE</version>
                 </dependency>
             </dependencies>
+            <plugins>
+                <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>appengine-maven-plugin</artifactId>
+                    <version>2.2.0</version>
+                    <configuration>
+                        <version>${app_version}</version>
+                        <projectId>kianming1988</projectId>
+                    </configuration>
+                </plugin>
+            </plugins>
         </profile>
     </profiles>
 </project>

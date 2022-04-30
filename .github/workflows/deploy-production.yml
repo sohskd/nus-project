@@ -53,7 +53,7 @@ jobs:
 
       - name: Deploy Order Matching Service to App Engine
         if: env.RUNNER_READY == 'true'
-        run: "mvn -f ./back-end/project-capstone/03-nus-order-matching-service/03-order-matching-service/pom.xml --no-transfer-progress -Dapp_version=commit-${GITHUB_SHA::7} clean package appengine:deploy"
+        run: "mvn -f ./back-end/project-capstone/03-nus-order-matching-service/03-order-matching-service/pom.xml --no-transfer-progress -Dapp_version=commit-${GITHUB_SHA::7} -P cloud-gcp clean package appengine:deploy"
 
       - name: Deploy Forums Service to App Engine
         if: env.RUNNER_READY == 'true'
