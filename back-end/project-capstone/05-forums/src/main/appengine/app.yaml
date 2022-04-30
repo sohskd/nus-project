@@ -1,8 +1,5 @@
 service: forums
-runtime: java
-env: flex
-runtime_config:
-  jdk: openjdk8
+runtime: java11
 
 instance_class: b2
 manual_scaling:
