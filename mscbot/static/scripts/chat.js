@@ -3,15 +3,15 @@
 var coll = document.getElementsByClassName("collapsible");
 
 var popKeyPair = {
-	key1: ["How orders matching works?", "Generally, a buy order and a sell order are compatible if the maximum price of the buy order matches or exceeds the minimum price of the sell order.","popQn"], 
+	key1: ["How orders matching works?", "Generally, order matching works when a buy order and a sell order are compatible if the maximum price of the buy order matches or exceeds the minimum price of the sell order.","popQn"], 
 	
-	key2: ["How do I join the orders matching platform?", "Register an account with us and you are well to kick start the order matching journey with us!","popQn"],
+	key2: ["How do I join the orders matching platform?", "Register an account with us to join the platform, and you are well to kick start the order matching journey with us!","popQn"],
 	
-	key3: ["Why join orders matching platform?", "Join us now to have superior market access, technology solutions, industry expertise!","popQn"],
+	key3: ["Why join orders matching platform?", "Join our orders matching platform now to have superior market access, technology solutions, industry expertise!","popQn"],
 	
-	key4: ["How much commission does your platform collect?", "$0! Exclusively for our members!","popQn"],
+	key4: ["How much commission does your platform collect?", "$0 commission! Exclusively for our members!","popQn"],
 	
-	key5: ["How to know if an order matching platform can be trusted?", "The platform should prefably be NASDAQ listed and is licensed by the Monetary Authority of Singapore (MAS)","hotTop"], 
+	key5: ["How to know if an order matching platform can be trusted?", "The order matching platform can be trusted if it is NASDAQ listed and is licensed by the Monetary Authority of Singapore (MAS)","hotTop"], 
 	
 	key6: ["What is the Stock Market?", "The stock market refers to public markets that exist for issuing, buying, and selling stocks that trade on a stock exchange or over-the-counter. Stocks, also known as equities, represent fractional ownership in a company, and the stock market is a place where investors can buy and sell ownership of such investible assets. An efficiently functioning stock market is considered critical to economic development, as it gives companies the ability to quickly access capital from the public.","hotTop"]
 };
@@ -111,13 +111,12 @@ function getResponse() {
 	
 	for (var key in popKeyPair) {
 		++keyCount;
-		let question2 = popKeyPair[key][0];
-		let question = popKeyPair[key][1];
-		let question1 = popKeyPair[key][2];
-		let result = question.match(userText);
-			if (result!== null){
-				
-				loader(question2,"header",keyCount);
+		let question = popKeyPair[key][0];
+		let answer = popKeyPair[key][1];
+		
+		let ansMatchResult = answer.match(userText);
+			if (ansMatchResult!== null){
+				loader(question,"header",keyCount);
 			}
 		}
 
