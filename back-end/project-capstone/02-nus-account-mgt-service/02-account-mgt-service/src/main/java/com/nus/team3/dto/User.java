@@ -20,16 +20,14 @@ public class User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+  
   private String email;
   private String username;
   private String password;
   private Boolean loggon_i;  
 
 
-  public Integer getId(){
-   return id;
-  }
+ 
 
   public String getEmail(){
     return email;
@@ -47,10 +45,7 @@ public class User {
     return loggon_i;
   }
 
-  public void setId(Integer id){
-    this.id = id;
-  }
-  
+    
   public void setEmail(String email){
      this.email = email;
   }

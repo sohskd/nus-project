@@ -1,10 +1,9 @@
-drop table if exists `user_account_tab`;
-CREATE TABLE `user_account_tab`
+drop table if exists `user`;
+CREATE TABLE `user`
 (   
-    `id`          VARCHAR(255) NOT NULL,
     `username`    VARCHAR(255) NOT NULL,
     `email`       VARCHAR(255) NOT NULL,
     `password`    VARCHAR(255) NOT NULL,
-    `loggon_i`    VARCHAR(255),
-       PRIMARY KEY (`id`)
+    `loggon_i`    bit(1),
+       PRIMARY KEY (`username`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
