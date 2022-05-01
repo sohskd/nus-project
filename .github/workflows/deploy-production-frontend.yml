@@ -25,6 +25,7 @@ jobs:
       - name: Build project
         if: env.RUNNER_READY == 'true'
         run: |
+          cd front-end
           npm install
           npm run build
 
