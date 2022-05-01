@@ -1,9 +1,8 @@
-name: Deploy to Production
+name: Deploy Backend to Production
 on:
   push:
     branches:
-      - production
-      - github-actions
+      - production/backend
 
 jobs:
   deploy:
