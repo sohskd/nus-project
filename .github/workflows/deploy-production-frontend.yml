@@ -1,0 +1,28 @@
+name: Deploy Frontend to Production
+on:
+  push:
+    branches:
+      - production/frontend
+
+jobs:
+  deploy:
+    permissions:
+      contents: "read"
+      id-token: "write"
+
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Checkout
+        uses: "actions/checkout@v3"
+
+      - name: Install Firebase CLI
+        run: |
+          curl -sL https://firebase.tools | bash
+
+      - name: Set RUNNER_READY env var to true
+        run: echo "RUNNER_READY=true" >> "$GITHUB_ENV"
+
+      - name: Deploy Frontend to Firebase Hosting
+        if: env.RUNNER_READY == 'true'
+        run: |
+          firebase deploy --only hosting --token "${{ secrets.FIREBASE_TOKEN }}" --project kianming1988
