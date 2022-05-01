@@ -40,6 +40,11 @@
         </dependency>
 
         <dependency>
+            <groupId>com.google.cloud.sql</groupId>
+            <artifactId>mysql-socket-factory</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.24</version>
@@ -127,15 +132,6 @@
     </dependencyManagement>
 
     <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>application*.yml</include>
-                </includes>
-            </resource>
-        </resources>
-
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -157,9 +153,6 @@
     <profiles>
         <profile>
             <id>dev</id>
-            <properties>
-                <profile.active>dev</profile.active>
-            </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
@@ -167,7 +160,7 @@
         <profile>
             <id>cloud-gcp</id>
             <properties>
-                <profile.active>cloud-gcp</profile.active>
+                <activatedProperties>cloud-gcp</activatedProperties>
             </properties>
             <dependencies>
                 <dependency>
