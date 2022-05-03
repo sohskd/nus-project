@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+// NOTE: CORS origins MUST be exact match!
+@CrossOrigin(origins = {"https://www.omni-trade.xyz"})
 @RestController
 @RequestMapping("/transaction")
 public class TransactionDao {
