@@ -1,15 +1,33 @@
-# Helidon SE Database
+# Omnitrade Forums
 
-Helidon SE application that uses the dbclient API with an in-memory H2 database.
+Omnitrade stock discussion forums, built on Helidon SE
 
-## Build and run
+## Local Project Setup
+1. Oracle JDK 17.0.1 (aka Java 17)
+2. Apache Maven 3.8.3
+3. Helidon CLI: https://helidon.io/docs/v2/#/about/05_cli
+4. Docker Desktop (for MySQL image)
 
-With JDK11+
+## Starting Helidon Development
+1. Run `docker-compose -f docker-compose.yml up -d` in the root folder of this entire repository
+2. Run `helidon dev` in this project folder
+
+## Building the Application
+
+Local build With JDK11+
 ```bash
 mvn package
-java -jar target/forums.jar
+java -jar target/omnitrade-forums.jar
 ```
 
+## Deploy on Google App Engine
+
+Manually
+``` 
+mvn -Dapp_version=helidon package appengine:deploy
+```
+
+> NOTE: Everything below this line is default text generated from the `helidon init` command
 ## Exercise the application
 
 ```
