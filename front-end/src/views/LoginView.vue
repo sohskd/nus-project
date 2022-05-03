@@ -32,15 +32,18 @@
 </template>
 
 <script>
-// import HelloWorld from "../components/HelloWorld";
+import axios from "axios";
 
 export default {
   name: "LoginView",
-
   components: {
     // HelloWorld,
   },
-
+  mounted() {
+    axios
+      .get("https://api.coindesk.com/v1/bpi/currentprice.json")
+      .then((response) => console.log(response));
+  },
   methods: {
     login() {
       console.log("LOGIN");
