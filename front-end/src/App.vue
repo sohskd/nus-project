@@ -12,6 +12,7 @@
           <v-list-item-group
             v-model="group"
             active-class="teal--text text--accent-4"
+            mandatory
           >
             <router-link to="/" class="text-decoration-none">
               <v-list-item>
