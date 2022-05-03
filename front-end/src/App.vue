@@ -21,12 +21,20 @@
                 <v-list-item-title>Home</v-list-item-title>
               </v-list-item>
             </router-link>
-            <router-link to="/about" class="text-decoration-none">
+            <router-link to="/login" class="text-decoration-none">
               <v-list-item>
                 <v-list-item-icon>
                   <v-icon>mdi-account</v-icon>
                 </v-list-item-icon>
                 <v-list-item-title>Account</v-list-item-title>
+              </v-list-item>
+            </router-link>
+            <router-link to="/about" class="text-decoration-none">
+              <v-list-item>
+                <v-list-item-icon>
+                  <v-icon>mdi-lifebuoy</v-icon>
+                </v-list-item-icon>
+                <v-list-item-title>About</v-list-item-title>
               </v-list-item>
             </router-link>
           </v-list-item-group>
