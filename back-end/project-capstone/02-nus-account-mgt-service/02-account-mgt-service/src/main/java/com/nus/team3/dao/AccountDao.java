@@ -14,7 +14,8 @@ import javax.servlet.http.HttpSession;
 
 import com.nus.team3.dto.User;
 
-@CrossOrigin(origins = {"*.omni-trade.xyz"})
+// NOTE: CORS origins MUST be exact match!
+@CrossOrigin(origins = {"https://www.omni-trade.xyz"})
 @RestController
 @RequestMapping("/account")
 public class AccountDao {
