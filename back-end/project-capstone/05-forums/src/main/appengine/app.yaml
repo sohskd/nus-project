@@ -1,5 +1,6 @@
 service: forums
 runtime: java11
+env: flex
 
 instance_class: b2
 manual_scaling:
