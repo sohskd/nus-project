@@ -10,6 +10,7 @@
               prepend-inner-icon="mdi-account"
               dense
               filled
+              v-model="username"
             ></v-text-field>
             <v-text-field
               label="Password"
@@ -17,11 +18,15 @@
               prepend-inner-icon="mdi-key"
               dense
               filled
+              v-model="password"
             ></v-text-field>
             <v-divider />
           </v-card-text>
           <v-card-actions>
-            <v-col class="text-right">
+            <v-col class="text-center">
+              <v-btn color="cyan accent-4" dark @click="signUp">Sign Up</v-btn>
+            </v-col>
+            <v-col class="text-center">
               <v-btn color="teal accent-4" dark @click="login">Login</v-btn>
             </v-col>
           </v-card-actions>
@@ -39,14 +44,30 @@ export default {
   components: {
     // HelloWorld,
   },
-  mounted() {
-    axios
-      .get("https://api.coindesk.com/v1/bpi/currentprice.json")
-      .then((response) => console.log(response));
+  data() {
+    return {
+      username: "wallstreetwolf",
+      password: "game$top",
+    };
   },
+  mounted() {},
   methods: {
     login() {
-      console.log("LOGIN");
+      console.log(`LOGIN with ${this.username}, ${this.password}`);
+      axios
+        .post(
+          "https://accounts.omni-trade.xyz/account/userLogon",
+          `${this.username}#${this.password}`,
+          {
+            headers: {
+              "Content-Type": "text/plain",
+            },
+          }
+        )
+        .then((response) => console.log(response));
+    },
+    signUp() {
+      console.log(`SIGN UP with ${this.username}, ${this.password}`);
     },
   },
 };
