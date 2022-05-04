@@ -16,7 +16,13 @@
             <v-card-actions>
               <v-spacer></v-spacer>
 
-              <v-btn color="green" dark> Buy </v-btn>
+              <v-btn
+                @click="buyStock(card.data.stockTicker, card.data.priceLive)"
+                color="green"
+                dark
+              >
+                Buy
+              </v-btn>
 
               <v-btn color="red" dark> Sell </v-btn>
 
@@ -53,6 +59,7 @@ export default {
           this.cards.push({
             title: Number(stock.priceLive).toFixed(2),
             src: this.getPlaceholderImage(stock.stockTicker),
+            data: stock,
             flex: 6,
           });
         });
@@ -71,6 +78,32 @@ export default {
         b = ("0" + Math.round(Math.random() * 256).toString(16)).slice(-2);
       // console.log(r, g, b);
       return `#${r}${g}${b}`;
+    },
+    async buyStock(ticker, price) {
+      let stockAmount = Math.round(Math.random() * 100);
+      console.log(`[buyStock] Buying ${stockAmount}x${ticker} @ ${price}...`);
+      let result = await axios.post(
+        "https://orders.omni-trade.xyz/api/ordermatching/order",
+        `BUY#${ticker}#${stockAmount}#${price}`,
+        {
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        }
+      );
+      if (result.status === 200) {
+        this.stocksList = result.data.data;
+        this.stocksList.forEach((stock) => {
+          this.cards.push({
+            title: Number(stock.priceLive).toFixed(2),
+            src: this.getPlaceholderImage(stock.stockTicker),
+            ticker: stock.stockTicker,
+            flex: 6,
+          });
+        });
+      } else {
+        return null;
+      }
     },
   },
   data: () => ({
