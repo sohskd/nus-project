@@ -15,16 +15,12 @@
             <v-card-actions>
               <v-spacer></v-spacer>
 
-              <v-btn icon>
-                <v-icon>mdi-heart</v-icon>
-              </v-btn>
+              <v-btn color="green" dark> Buy </v-btn>
 
-              <v-btn icon>
-                <v-icon>mdi-bookmark</v-icon>
-              </v-btn>
+              <v-btn color="red" dark> Sell </v-btn>
 
-              <v-btn icon>
-                <v-icon>mdi-share-variant</v-icon>
+              <v-btn color="blue" icon>
+                <v-icon>mdi-forum</v-icon>
               </v-btn>
             </v-card-actions>
           </v-card>
