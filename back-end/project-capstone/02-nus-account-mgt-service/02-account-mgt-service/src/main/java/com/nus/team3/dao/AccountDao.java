@@ -2,6 +2,7 @@ package com.nus.team3.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.HashMap;
@@ -115,10 +116,10 @@ public class AccountDao {
             String jdbcUsername = env.getProperty("spring.datasource.username");
             String jdbcPassword = env.getProperty("spring.datasource.password");
             Connection conn = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword);
-            Statement stmt = conn.createStatement();
-            ResultSet rs;
+            PreparedStatement stmt = conn.prepareStatement("SELECT id FROM user_account_tab WHERE name = ? LIMIT 1");
 
-            rs = stmt.executeQuery("SELECT id FROM user_account_tab WHERE name = '" + username + "' LIMIT 1");
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 userId = rs.getInt("id");
                 // System.out.println("User ID is " + userId);
