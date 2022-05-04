@@ -10,6 +10,7 @@
               gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
               height="200px"
             >
+              <v-card-title v-text="card.title"></v-card-title>
             </v-img>
 
             <v-card-actions>
@@ -31,18 +32,50 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
+  name: "LoginView",
+  components: {
+    // HelloWorld,
+  },
+  mounted() {
+    this.getStocksList();
+  },
+  methods: {
+    async getStocksList() {
+      let result = await axios.get(
+        "https://orders.omni-trade.xyz/api/stocklive"
+      );
+      if (result.status === 200) {
+        this.stocksList = result.data.data;
+        this.stocksList.forEach((stock) => {
+          this.cards.push({
+            title: Number(stock.priceLive).toFixed(2),
+            src: this.getPlaceholderImage(stock.stockTicker),
+            flex: 6,
+          });
+        });
+      } else {
+        return null;
+      }
+    },
+    getPlaceholderImage(text) {
+      let bgColor = this.randomColor().slice(-6);
+      let fgColor = this.randomColor().slice(-6);
+      return `https://via.placeholder.com/500x500/${bgColor}/${fgColor}/?text=${text}`;
+    },
+    randomColor() {
+      let r = ("0" + Math.round(Math.random() * 256).toString(16)).slice(-2),
+        g = ("0" + Math.round(Math.random() * 256).toString(16)).slice(-2),
+        b = ("0" + Math.round(Math.random() * 256).toString(16)).slice(-2);
+      // console.log(r, g, b);
+      return `#${r}${g}${b}`;
+    },
+  },
   data: () => ({
-    cards: [
-      {
-        src: "https://via.placeholder.com/500x500/000000/FFFFFF/?text=SE",
-        flex: 6,
-      },
-      {
-        src: "https://via.placeholder.com/500x500/000000/FFFFFF/?text=MSFT",
-        flex: 6,
-      },
-    ],
+    stocksList: [],
+    cards: [],
   }),
 };
 </script>
