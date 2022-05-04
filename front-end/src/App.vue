@@ -14,7 +14,7 @@
             active-class="teal--text text--accent-4"
             mandatory
           >
-            <router-link to="/" class="text-decoration-none">
+            <router-link :to="homePath" class="text-decoration-none">
               <v-list-item>
                 <v-list-item-icon>
                   <v-icon>mdi-home</v-icon>
@@ -22,7 +22,7 @@
                 <v-list-item-title>Home</v-list-item-title>
               </v-list-item>
             </router-link>
-            <router-link to="/login" class="text-decoration-none">
+            <router-link :to="accountPath" class="text-decoration-none">
               <v-list-item>
                 <v-list-item-icon>
                   <v-icon>mdi-account</v-icon>
@@ -47,9 +47,26 @@
 </template>
 
 <script>
+// import { mapGetters } from "vuex";
+
 export default {
   name: "App",
-
+  computed: {
+    homePath() {
+      if (this.$store.getters.isLoggedIn) {
+        return "/dashboard";
+      } else {
+        return "/";
+      }
+    },
+    accountPath() {
+      if (this.$store.getters.isLoggedIn) {
+        return "/account";
+      } else {
+        return "/login";
+      }
+    },
+  },
   data: () => ({
     drawer: false,
     group: null,

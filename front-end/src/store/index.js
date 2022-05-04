@@ -9,6 +9,11 @@ const store = new Vuex.Store({
       username: null,
     },
   },
+  getters: {
+    isLoggedIn: (state) => {
+      return state.userData.username !== null;
+    },
+  },
   mutations: {
     saveUserState(state, username) {
       state.userData.username = username;
