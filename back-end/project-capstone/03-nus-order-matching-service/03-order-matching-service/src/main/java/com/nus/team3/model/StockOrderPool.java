@@ -44,13 +44,14 @@ public class StockOrderPool {
                 Order excessSellOrder = null;
                 if (excessBuyQty > 0) {
                     bestBuyOrder.setQuantity(Math.min(buyQty, sellQty));
-                    logger.info("Creating new excess order");
-                    excessBuyOrder = new Order(bestBuyOrder.getBuyOrSell(), bestBuyOrder.getTransactionId(), bestBuyOrder.getStockTicker(), String.valueOf(bestBuyOrder.getUser()), bestBuyOrder.getTimestamp(), bestBuyOrder.getPrice(),
+                    logger.info("Creating new excess BUY order");
+                    excessBuyOrder = new Order(bestBuyOrder.getBuyOrSell(), Utils.getSaltString(), bestBuyOrder.getStockTicker(), String.valueOf(bestBuyOrder.getUser()), bestBuyOrder.getTimestamp(), bestBuyOrder.getPrice(),
                             excessBuyQty);
                     new HttpSender().sendOrder(excessBuyOrder);
                 } else if (excessSellQty > 0) {
                     bestSellOrder.setQuantity(Math.min(buyQty, sellQty));
-                    excessSellOrder = new Order(bestSellOrder.getBuyOrSell(), bestSellOrder.getTransactionId(), bestSellOrder.getStockTicker(), String.valueOf(bestSellOrder.getUser()), bestSellOrder.getTimestamp(), bestSellOrder.getPrice(),
+                    logger.info("Creating new excess SELL order");
+                    excessSellOrder = new Order(bestSellOrder.getBuyOrSell(), Utils.getSaltString(), bestSellOrder.getStockTicker(), String.valueOf(bestSellOrder.getUser()), bestSellOrder.getTimestamp(), bestSellOrder.getPrice(),
                             excessSellQty);
                     new HttpSender().sendOrder(excessSellOrder);
                 }
