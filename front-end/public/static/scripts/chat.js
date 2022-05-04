@@ -5,11 +5,11 @@ var coll = document.getElementsByClassName("collapsible");
 var popKeyPair = {
 	key1: ["How orders matching works?", "Generally, order matching works when a buy order and a sell order are compatible if the maximum price of the buy order matches or exceeds the minimum price of the sell order.","popQn"], 
 	
-	key2: ["How do I join the orders matching platform?", "Register an account with us to join the platform, and you are well to kick start the order matching journey with us!","popQn"],
+	key2: ["How do I join OMNI Trade?", "Register an account with us to join OMNI Trade, and you are well to kick start the order matching journey with us!","popQn"],
 	
-	key3: ["Why join orders matching platform?", "Join our orders matching platform now to have superior market access, technology solutions, industry expertise!","popQn"],
+	key3: ["Why join OMNI Trade?", "Join OMNI Trade now to have superior market access, technology solutions, industry expertise!","popQn"],
 	
-	key4: ["How much commission does your platform collect?", "$0 commission! Exclusively for our members!","popQn"],
+	key4: ["How much commission does OMNI Trade collects?", "$0 commission! Exclusively for our members!","popQn"],
 	
 	key5: ["How to know if an order matching platform can be trusted?", "The order matching platform can be trusted if it is NASDAQ listed and is licensed by the Monetary Authority of Singapore (MAS)","hotTop"], 
 	
@@ -50,7 +50,7 @@ function getTime() {
 // Gets the first message
 function firstBotMessage() {
 	
-    let firstMessage = "Hi, I am here to answer any questions you may have on stock order matching."
+    let firstMessage = "Hi! I am here to guide you on your first step to OMNI Trading."
     
 	document.getElementById("botStarterMessage").innerHTML = '<p class="botText"><span style="border-bottom: 0px solid black; padding-left: 15px">' + firstMessage + '</span></p>';
 	
@@ -58,7 +58,7 @@ function firstBotMessage() {
 	
 	let popQnHTML = "<p class='botText'><span id='line' style='border-bottom: 0px solid black; padding-left: 15px'>Popular Questions"
 	
-	let spacingHTML = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><br>";
+	let spacingHTML = "<br><br>";
 	
 	hotTopHTML+=spacingHTML;
 	
@@ -99,30 +99,38 @@ function getHardResponse(userText) {
 function getResponse() {
     let userText = $("#textInput").val();
 
-    if (userText == "") {
-        
+    if (userText == "") {  
 		loader("Try asking me a question!");
-		
-    document.getElementById("chat-bar-bottom").scrollIntoView(true);
+		let dateTime = getDateTime()
+		let userHtml = '<p class="userText"><br><span>' + userText + '</span></p><p class="userDateTimeText"> You at '+ dateTime +'</p>';
+		$("#textInput").val("");
+		$("#chatbox").append(userHtml);
+		document.getElementById("chat-bar-bottom").scrollIntoView(true);
     }
-	let dateTime = getDateTime()
-    let userHtml = '<p class="userText"><span>' + userText + '</span></p><p class="userDateTimeText"> You at '+ dateTime +'</p>';
-	let keyCount = 0;
-	
-	for (var key in popKeyPair) {
-		++keyCount;
-		let question = popKeyPair[key][0];
-		let answer = popKeyPair[key][1];
+	else{
+		let dateTime = getDateTime()
+		let userHtml = '<p class="userText"><span>' + userText + '</span></p><p class="userDateTimeText"> You at '+ dateTime +'</p>';
+		let keyCount = 0;
+	    let ansFound = false;
+		for (var key in popKeyPair) {
+			++keyCount;
+			let question = popKeyPair[key][0];
+			let answer = popKeyPair[key][1];
 		
-		let ansMatchResult = answer.match(userText);
-			if (ansMatchResult!== null){
-				loader(question,"header",keyCount);
+			let ansMatchResult = answer.match(userText);
+				if (ansMatchResult!== null){
+					loader(question,"header",keyCount);
+					ansFound = true;
+				}
+				
 			}
+		if(ansFound==false){
+			loader("Try entering another keyword!");
 		}
-
-    $("#textInput").val("");
-    $("#chatbox").append(userHtml);
-    document.getElementById("chat-bar-bottom").scrollIntoView(true);
+		$("#textInput").val("");
+		$("#chatbox").append(userHtml);
+		document.getElementById("chat-bar-bottom").scrollIntoView(true);
+	}
 }
 
 // Handles sending text via button clicks
@@ -156,14 +164,14 @@ function loader(selectedQn, header,keyCount) {
 	let headerValue = header;
 	let spanCloseHTML = "";
 	if (headerValue == "header"){
-		headerHTML = "Related Questions &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br><br>" 
-		hrefOpenHTML = '<span> <a href="#" style="text-decoration:none;">'
+		headerHTML = "Related Questions<br><br>" 
+		hrefOpenHTML = '<span class="fa fa-star"> <a href="#" style="text-decoration:none;">'
 		hrefCloseHTML = '</a>'
 		onclickOpenHTML = " id='line' onclick='selectedQn("+keyCount+")'"
 		spanCloseHTML = '</span></p>'
 		
 	}
-	let botHtml = '<p class="botText"><span style="border-bottom: 0px solid black; padding-left: 15px"'+onclickOpenHTML+'>' + headerHTML + hrefOpenHTML+ selectedQn + hrefCloseHTML+ '</span></p>'+spanCloseHTML+'<p class="botDateTimeText"><span> We at ' + dateTime +'</span></p>';
+	let botHtml = '<p class="botText"><span style="border-bottom: 0px solid black; padding-left: 15px"'+onclickOpenHTML+'>' + headerHTML + hrefOpenHTML+ selectedQn + hrefCloseHTML+ '</span></p>'+spanCloseHTML+'<p class="botDateTimeText"><span>OMNI Trade at ' + dateTime +'</span></p>';
 	let loader = '<p class="loader"><span></span></p>';
 	
 	$("#chatbox").append(loader);
