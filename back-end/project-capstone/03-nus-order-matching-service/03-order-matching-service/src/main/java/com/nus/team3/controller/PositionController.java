@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 // NOTE: CORS origins MUST be exact match!
-@CrossOrigin(origins = {"https://www.omni-trade.xyz"})
+@CrossOrigin(origins = {"https://www.omni-trade.xyz","*"})
 @Api
 @Slf4j
 @RestController

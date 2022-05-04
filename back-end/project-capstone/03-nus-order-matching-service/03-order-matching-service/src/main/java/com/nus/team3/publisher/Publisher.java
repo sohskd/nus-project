@@ -20,7 +20,7 @@ import java.util.List;
 import static com.nus.team3.dao.TransactionDao.*;
 
 // NOTE: CORS origins MUST be exact match!
-@CrossOrigin(origins = {"https://www.omni-trade.xyz"})
+@CrossOrigin(origins = {"https://www.omni-trade.xyz","*"})
 @RestController
 @RequestMapping("/ordermatching")
 public class Publisher {
