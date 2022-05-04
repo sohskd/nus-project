@@ -83,7 +83,7 @@ export default {
       let stockAmount = Math.round(Math.random() * 100);
       console.log(`[buyStock] Buying ${stockAmount}x${ticker} @ ${price}...`);
       let result = await axios.post(
-        "https://orders.omni-trade.xyz/api/ordermatching/order",
+        "https://orders.omni-trade.xyz/ordermatching/order",
         `BUY#${ticker}#${stockAmount}#${price}`,
         {
           headers: {
