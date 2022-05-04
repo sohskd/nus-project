@@ -38,6 +38,7 @@
 
 <script>
 import axios from "axios";
+import store from "../store";
 
 export default {
   name: "LoginView",
@@ -68,6 +69,9 @@ export default {
     },
     signUp() {
       console.log(`SIGN UP with ${this.username}, ${this.password}`);
+
+      store.commit("increment");
+      console.log(store.state.count); // -> 1
     },
   },
 };
