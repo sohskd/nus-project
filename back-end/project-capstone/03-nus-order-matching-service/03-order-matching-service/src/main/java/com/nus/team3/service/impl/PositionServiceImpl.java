@@ -50,14 +50,14 @@ public class PositionServiceImpl implements PositionService {
 
       String stock = positionDto.getStockTicker();
 
-      if (positionDto.getSide().equals("BUY")) {
+      if (positionDto.getSide().equalsIgnoreCase("BUY")) {
         String keyBuy = stock + ":" + "BUY";
         List<Double> listOfPrice = m.getOrDefault(keyBuy, new ArrayList<>());
         for (int i = 0; i < positionDto.getQuantity(); i++) {
           listOfPrice.add(positionDto.getPrice());
         }
         m.put(keyBuy, listOfPrice);
-      } else if (positionDto.getSide().equals("SELL")) {
+      } else if (positionDto.getSide().equalsIgnoreCase("SELL")) {
         String keySell = stock + ":" + "SELL";
         List<Double> listOfPrice = m.getOrDefault(stock + ":" + "SELL", new ArrayList<>());
         for (int i = 0; i < positionDto.getQuantity(); i++) {
@@ -98,6 +98,11 @@ public class PositionServiceImpl implements PositionService {
     }
 
     return ans;
+  }
+
+  @Override
+  public List<StockLiveDto> getStockLive() {
+    return this.stockLiveMapper.findAll();
   }
 
   private static void cancelOutStocks(Map<String, List<Double>> m, Set<String> stocks) {

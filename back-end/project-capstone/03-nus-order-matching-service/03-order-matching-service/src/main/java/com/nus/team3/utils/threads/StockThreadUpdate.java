@@ -31,8 +31,8 @@ public class StockThreadUpdate {
       List<StockLiveDto> stockTickers = stockLiveMapper.findAll();
       stockTickers.forEach(
           s -> {
-            var max = s.getPriceFixAround() + variance;
-            var min = s.getPriceFixAround() - variance;
+            double max = s.getPriceFixAround() + variance;
+            double min = s.getPriceFixAround() - variance;
             double priceNow = random.nextInt((int) (max - min)) + min;
             s.setPriceLive(priceNow);
             stockLiveMapper.updateStockLivePriceByStock(s.getStockTicker(), priceNow);
