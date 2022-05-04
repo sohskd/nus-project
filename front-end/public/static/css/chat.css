@@ -1,4 +1,7 @@
 .chat-bar-collapsible {
+    color: white;
+    scroll-behavior: smooth;
+    font-family: Helvetica, sans-serif, Arial;
     position: fixed;
     bottom: 0;
     right: 50px;
@@ -124,6 +127,8 @@
 }
 
 .botText {
+    margin-top: 1em;
+    margin-bottom: 1em;
     color: #4d4d4d;
     font-family: Helvetica;
     font-weight: normal;
