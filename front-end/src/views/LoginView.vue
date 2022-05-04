@@ -38,6 +38,7 @@
 
 <script>
 import axios from "axios";
+import { mapMutations } from "vuex";
 
 export default {
   name: "LoginView",
@@ -52,19 +53,25 @@ export default {
   },
   mounted() {},
   methods: {
-    login() {
+    ...mapMutations({
+      saveUserData: "saveUserState",
+    }),
+    async login() {
       console.log(`LOGIN with ${this.username}, ${this.password}`);
-      axios
-        .post(
-          "https://accounts.omni-trade.xyz/account/userLogon",
-          `${this.username}#${this.password}`,
-          {
-            headers: {
-              "Content-Type": "text/plain",
-            },
-          }
-        )
-        .then((response) => console.log(response));
+      let result = await axios.post(
+        "https://accounts.omni-trade.xyz/account/userLogon",
+        `${this.username}#${this.password}`,
+        {
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        }
+      );
+      if (result.status === 200) {
+        console.log("LOGIN SUCCESS");
+        this.saveUserData(this.username);
+        this.$router.push("/dashboard");
+      }
     },
     signUp() {
       console.log(`SIGN UP with ${this.username}, ${this.password}`);
