@@ -79,26 +79,13 @@ public class AccountDao {
                     username);
             if (password.equals(retrievedPasswords.get(0))) {
                 sqlSessionTemplate.update(rootMapperPath + updateLoggon_i_1, username);
-
-                String jdbcUrl = env.getProperty("spring.datasource.url").replace("account_service_db",
-                        "order_matching_service_db");
-                String jdbcUsername = env.getProperty("spring.datasource.username");
-                String jdbcPassword = env.getProperty("spring.datasource.password");
-                Connection conn = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword);
-                Statement stmt = conn.createStatement();
-                ResultSet rs;
-
-                rs = stmt.executeQuery("SELECT id FROM user_account_tab WHERE name = '" + username + "' LIMIT 1");
-                while (rs.next()) {
-                    String userId = rs.getString("id");
-                    System.out.println("User ID is " + userId);
-
-                    Map<String, Integer> data = Map.of("userId", Integer.parseInt(userId));
+                int userId = getUserId(username);
+                if (userId != -1) {
+                    Map<String, Integer> data = Map.of("userId", userId);
                     resultMap.put("data", data);
                     resultMap.put("message", "Login successfully!");
                     resultMap.put("success", true);
                 }
-                conn.close();
             }
             json = new ObjectMapper().writeValueAsString(resultMap);
         } catch (Exception e) {
@@ -120,4 +107,27 @@ public class AccountDao {
         return "hello world";
     }
 
+    private int getUserId(String username) {
+        int userId = -1;
+        try {
+            String jdbcUrl = env.getProperty("spring.datasource.url").replace("account_service_db",
+                    "order_matching_service_db");
+            String jdbcUsername = env.getProperty("spring.datasource.username");
+            String jdbcPassword = env.getProperty("spring.datasource.password");
+            Connection conn = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword);
+            Statement stmt = conn.createStatement();
+            ResultSet rs;
+
+            rs = stmt.executeQuery("SELECT id FROM user_account_tab WHERE name = '" + username + "' LIMIT 1");
+            while (rs.next()) {
+                userId = rs.getInt("id");
+                // System.out.println("User ID is " + userId);
+            }
+            conn.close();
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
+        return userId;
+    }
 }
