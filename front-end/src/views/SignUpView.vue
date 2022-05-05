@@ -44,8 +44,7 @@
 </template>
 
 <script>
-// import axios from "axios";
-import { mapMutations } from "vuex";
+import axios from "axios";
 
 export default {
   name: "SignUpView",
@@ -61,17 +60,25 @@ export default {
   },
   mounted() {},
   methods: {
-    ...mapMutations({
-      saveUserData: "saveUserState",
-    }),
-    async login() {
+    login() {
       this.$router.push("/login");
     },
-    signUp() {
-      console.log(`SIGN UP with ${this.username}, ${this.password}`);
-
-      this.$store.commit("increment");
-      console.log(this.$store.state.count); // -> 1
+    async signUp() {
+      console.log(
+        `SIGN UP with ${this.email}, ${this.username}, ${this.password}`
+      );
+      let result = await axios.post(
+        "https://accounts.omni-trade.xyz/account/createNewAccount",
+        {
+          email: this.email,
+          username: this.username,
+          password: this.password,
+        }
+      );
+      if (result.status === 200) {
+        console.log("SIGN UP SUCCESS");
+        this.$router.push("/");
+      }
     },
   },
 };
