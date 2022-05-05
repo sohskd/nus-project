@@ -93,7 +93,7 @@
 import axios from "axios";
 
 export default {
-  name: "LoginView",
+  name: "DashboardView",
   components: {
     // HelloWorld,
   },
