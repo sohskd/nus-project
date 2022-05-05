@@ -57,7 +57,7 @@ public class AccountDao {
         return sqlSessionTemplate.selectList(rootMapperPath + selectUserQuery, username);
     }
 
-    @PostMapping(value = "/createNewAccount", consumes = "application/json")
+    @PostMapping(value = "/createNewAccount", consumes = "application/json", produces = "application/json")
     public String createNewAccount(@RequestBody User user) {
         logger.info("Username is {}", user.getUsername());
         String json = "";
