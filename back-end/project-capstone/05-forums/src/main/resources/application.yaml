@@ -11,18 +11,18 @@ db:
     #
     # docker run --rm --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root \
     #   -e MYSQL_DATABASE=pokemon -e MYSQL_USER=user -e MYSQL_PASSWORD=password  mysql:5.7
-    url: jdbc:mysql://127.0.0.1:3306/pokemon?useSSL=false
-    username: user
-    password: password
-    poolName: mysql
+    # url: jdbc:mysql://127.0.0.1:3306/pokemon?useSSL=false
+    # username: user
+    # password: password
+    # poolName: mysql
     # url: "jdbc:mysql://10.32.176.3:3306/test?useSSL=false"
     # username: "ordermatching"
     # password: "Team3$"
     # poolName: mysql
-    # url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1
-    # username: sa
-    # password:
-    # poolName: h2
+    url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    poolName: h2
     initializationFailTimeout: -1
     connectionTimeout: 2000
     helidon:
