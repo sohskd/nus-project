@@ -5,10 +5,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nus.team3.dto.User;
 
@@ -56,10 +58,32 @@ public class AccountDao {
     }
 
     @PostMapping(value = "/createNewAccount", consumes = "application/json")
-    public int createNewAccount(@RequestBody User user) {
+    public String createNewAccount(@RequestBody User user) {
         logger.info("Username is {}", user.getUsername());
+        String json = "";
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("data", null);
+        resultMap.put("message", "Signup failed!");
+        resultMap.put("success", false);
+
         sqlSessionTemplate.insert(rootMapperPath + createUserQuery, user);
-        return 1;
+
+        int userId = createUser(user.getUsername(), user.getEmail());
+        if (userId != -1) {
+            Map<String, Integer> data = Map.of("userId", userId);
+            resultMap.put("data", data);
+            resultMap.put("message", "Signup completed!");
+            resultMap.put("success", true);
+        }
+
+        try {
+            json = new ObjectMapper().writeValueAsString(resultMap);
+        } catch (JsonProcessingException e) {
+            System.err.println("Got an exception!");
+            System.err.println(e.getMessage());
+        }
+
+        return json;
     }
 
     @PostMapping(value = "/userLogon", produces = "application/json")
@@ -127,6 +151,42 @@ public class AccountDao {
             conn.close();
         } catch (Exception e) {
             System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
+        return userId;
+    }
+
+    private int createUser(String username, String email) {
+        int userId = -1;
+        try {
+            String jdbcUrl = env.getProperty("spring.datasource.url").replace("account_service_db",
+                    "order_matching_service_db");
+            String jdbcUsername = env.getProperty("spring.datasource.username");
+            String jdbcPassword = env.getProperty("spring.datasource.password");
+            Connection conn = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword);
+            PreparedStatement stmt = conn.prepareStatement(
+                    "INSERT INTO user_account_tab (name, email, create_time, update_time) VALUES (?, ?, ?, ?)",
+                    Statement.RETURN_GENERATED_KEYS);
+
+            long timestampNow = Instant.now().getEpochSecond();
+            stmt.setString(1, username);
+            stmt.setString(2, email);
+            stmt.setLong(3, timestampNow);
+            stmt.setLong(4, timestampNow);
+
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows == 0) {
+                System.err.println("Creating user failed, no rows affected.");
+            }
+
+            ResultSet generatedKeys = stmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                userId = generatedKeys.getInt(1);
+            }
+            conn.close();
+        } catch (Exception e) {
+            System.err.println("Got an exception!");
             System.err.println(e.getMessage());
         }
         return userId;
