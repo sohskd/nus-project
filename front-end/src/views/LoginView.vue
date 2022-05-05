@@ -47,8 +47,8 @@ export default {
   },
   data() {
     return {
-      username: "wallstreetwolf",
-      password: "game$top",
+      username: "",
+      password: "",
     };
   },
   mounted() {},
