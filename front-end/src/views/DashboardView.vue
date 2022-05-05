@@ -17,39 +17,20 @@
               <v-spacer></v-spacer>
 
               <v-btn
-                @click="
-                  buyStock(
-                    'BUY',
-                    null,
-                    card.data.stockTicker,
-                    card.data.priceLive
-                  )
-                "
+                @click="openTradeDialog('BUY', card.data)"
                 color="green"
                 class="white--text"
-                :loading="isLoading"
-                :disabled="isLoading"
               >
                 Buy
               </v-btn>
 
               <v-btn
-                @click="
-                  buyStock(
-                    'SELL',
-                    null,
-                    card.data.stockTicker,
-                    card.data.priceLive
-                  )
-                "
+                @click="openTradeDialog('SELL', card.data)"
                 color="red"
                 class="white--text"
-                :loading="isLoading"
-                :disabled="isLoading"
               >
                 Sell
               </v-btn>
-
               <v-btn color="blue" icon>
                 <v-icon>mdi-forum</v-icon>
               </v-btn>
@@ -58,6 +39,53 @@
         </v-col>
       </v-row>
     </v-container>
+    <v-dialog v-model="isTradeDialogVisible" persistent max-width="600px">
+      <v-card>
+        <v-card-title>
+          <span class="text-h5"
+            >{{ tradeSide }}
+            {{ selectedStock ? selectedStock.stockTicker : "" }}</span
+          >
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  label="Amount*"
+                  outlined
+                  required
+                  v-model="selectedStock.amount"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  label="Price*"
+                  outlined
+                  required
+                  v-model="selectedStock.price"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+          <small>*indicates required field</small>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn secondary text @click="isTradeDialogVisible = false">
+            Cancel
+          </v-btn>
+          <v-btn
+            @click="submitOrder(tradeSide)"
+            :loading="isLoading"
+            :disabled="isLoading"
+            color="white--text blue darken-1"
+          >
+            Submit
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -69,6 +97,14 @@ export default {
   components: {
     // HelloWorld,
   },
+  data: () => ({
+    stocksList: [],
+    cards: [],
+    isLoading: false,
+    isTradeDialogVisible: false,
+    tradeSide: "",
+    selectedStock: {},
+  }),
   mounted() {
     this.getStocksList();
   },
@@ -91,25 +127,15 @@ export default {
         return null;
       }
     },
-    getPlaceholderImage(text) {
-      let bgColor = this.randomColor().slice(-6);
-      let fgColor = this.randomColor().slice(-6);
-      return `https://via.placeholder.com/500x500/${bgColor}/${fgColor}/?text=${text}`;
-    },
-    randomColor() {
-      let r = ("0" + Math.round(Math.random() * 256).toString(16)).slice(-2),
-        g = ("0" + Math.round(Math.random() * 256).toString(16)).slice(-2),
-        b = ("0" + Math.round(Math.random() * 256).toString(16)).slice(-2);
-      // console.log(r, g, b);
-      return `#${r}${g}${b}`;
-    },
-    async buyStock(side, amount, ticker, price) {
+    async submitOrder(side) {
+      let ticker = this.selectedStock.ticker;
+      let amount = this.selectedStock.amount;
+      let price = this.selectedStock.price;
       let userId = this.$store.getters.userData.userId;
+
       this.isLoading = true;
 
-      amount = Math.round(Math.random() * 100);
-
-      console.log(`[buyStock] ${side} ${amount}x${ticker} @ ${price}...`);
+      console.log(`[submitOrder] ${side} ${amount}x${ticker} @ ${price}...`);
 
       let result = await axios.post(
         "https://orders.omni-trade.xyz/ordermatching/order",
@@ -122,6 +148,7 @@ export default {
       );
 
       this.isLoading = false;
+      this.isTradeDialogVisible = false;
 
       if (result.status === 200) {
         return true;
@@ -129,11 +156,27 @@ export default {
         return false;
       }
     },
+    openTradeDialog(side, stockData) {
+      this.tradeSide = side;
+      this.selectedStock = {
+        amount: Math.round(Math.random() * 10),
+        price: stockData.priceLive.toFixed(2),
+        ticker: stockData.stockTicker,
+      };
+      this.isTradeDialogVisible = true;
+    },
+    getPlaceholderImage(text) {
+      let bgColor = this.randomColor().slice(-6);
+      let fgColor = this.randomColor().slice(-6);
+      return `https://via.placeholder.com/500x500/${bgColor}/${fgColor}/?text=${text}`;
+    },
+    randomColor() {
+      let r = ("0" + Math.round(Math.random() * 256).toString(16)).slice(-2),
+        g = ("0" + Math.round(Math.random() * 256).toString(16)).slice(-2),
+        b = ("0" + Math.round(Math.random() * 256).toString(16)).slice(-2);
+      // console.log(r, g, b);
+      return `#${r}${g}${b}`;
+    },
   },
-  data: () => ({
-    stocksList: [],
-    cards: [],
-    isLoading: false,
-  }),
 };
 </script>
