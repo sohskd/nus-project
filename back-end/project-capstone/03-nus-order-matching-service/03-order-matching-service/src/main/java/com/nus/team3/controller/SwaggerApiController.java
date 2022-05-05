@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 // NOTE: CORS origins MUST be exact match!
-@CrossOrigin(origins = {"https://www.omni-trade.xyz"})
+@CrossOrigin(origins = {"https://www.omni-trade.xyz","*"})
 @RestController
 public class SwaggerApiController {
 

@@ -1,5 +1,8 @@
 <template>
   <div class="about">
-    <h1>This is an about page</h1>
+    <h1 class="text-center">
+      This is the practice project for the Graduate Certificate in Architecting
+      Scalable Systems
+    </h1>
   </div>
 </template>

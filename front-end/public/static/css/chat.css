@@ -1,17 +1,21 @@
 .chat-bar-collapsible {
+    color: white;
+    scroll-behavior: smooth;
+    font-family: Helvetica, sans-serif, Arial;
     position: fixed;
     bottom: 0;
-    right: 50px;
+    right: 0px;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
 .collapsible {
-    background-color: #666666;
-    color: white;
+    background-color: #20B2AA;
+    color: #ffffff;
     cursor: pointer;
     padding: 18px;
     width: 500px;
     text-align: left;
+	font-weight: bold;
     outline: none;
     font-size: 18px;
     border-radius: 10px 10px 0px 0px;
@@ -63,7 +67,7 @@
     justify-content: space-between;
     width: 100%;
     align-items: center;
-    background-color: #737373;
+    background-color: #20B2AA;
     border-radius: 10px 10px 0px 0px;
     padding: 10px 0px 10px 10px;
 }
@@ -112,7 +116,7 @@
 .userText span {
     line-height: 1.5em;
     display: inline-block;
-    background: #808080;
+    background: #66CDAA;
     padding: 4px;
     border-radius: 8px;
     border-bottom-right-radius: 2px;
@@ -226,10 +230,21 @@
 #line{
     text-decoration-line: underline;
     text-underline-offset: 10px;
+	border-bottom: 1px solid black; 
+	padding-left: 50px
 }
 
 .close {
   font-size: 30px;
-  font-weight: 500;
-  padding-left: 330px;
+  font-weight: 700;
+  padding-left: 330px;   
+  color: #ffffff;
+  cursor: pointer;
 }
+
+p {
+  margin-top: 1em ;
+  margin-bottom: 1em ;
+}
+
+

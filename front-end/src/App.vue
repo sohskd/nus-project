@@ -14,7 +14,7 @@
             active-class="teal--text text--accent-4"
             mandatory
           >
-            <router-link to="/" class="text-decoration-none">
+            <router-link :to="homePath" class="text-decoration-none">
               <v-list-item>
                 <v-list-item-icon>
                   <v-icon>mdi-home</v-icon>
@@ -22,12 +22,28 @@
                 <v-list-item-title>Home</v-list-item-title>
               </v-list-item>
             </router-link>
-            <router-link to="/login" class="text-decoration-none">
+            <router-link
+              v-if="!isLoggedIn"
+              :to="accountPath"
+              class="text-decoration-none"
+            >
               <v-list-item>
                 <v-list-item-icon>
                   <v-icon>mdi-account</v-icon>
                 </v-list-item-icon>
                 <v-list-item-title>Account</v-list-item-title>
+              </v-list-item>
+            </router-link>
+            <router-link
+              v-if="isLoggedIn"
+              to="/orderbook"
+              class="text-decoration-none"
+            >
+              <v-list-item>
+                <v-list-item-icon>
+                  <v-icon>mdi-book-open-variant</v-icon>
+                </v-list-item-icon>
+                <v-list-item-title>Order Book</v-list-item-title>
               </v-list-item>
             </router-link>
             <router-link to="/about" class="text-decoration-none">
@@ -47,9 +63,29 @@
 </template>
 
 <script>
+// import { mapGetters } from "vuex";
+
 export default {
   name: "App",
-
+  computed: {
+    homePath() {
+      if (this.$store.getters.isLoggedIn) {
+        return "/dashboard";
+      } else {
+        return "/";
+      }
+    },
+    accountPath() {
+      if (this.$store.getters.isLoggedIn) {
+        return "/account";
+      } else {
+        return "/login";
+      }
+    },
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
+    },
+  },
   data: () => ({
     drawer: false,
     group: null,
