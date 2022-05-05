@@ -22,7 +22,11 @@
                 <v-list-item-title>Home</v-list-item-title>
               </v-list-item>
             </router-link>
-            <router-link :to="accountPath" class="text-decoration-none">
+            <router-link
+              v-if="!isLoggedIn"
+              :to="accountPath"
+              class="text-decoration-none"
+            >
               <v-list-item>
                 <v-list-item-icon>
                   <v-icon>mdi-account</v-icon>

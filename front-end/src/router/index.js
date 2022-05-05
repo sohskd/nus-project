@@ -31,6 +31,12 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "dashboard" */ "../views/DashboardView.vue"),
   },
+  {
+    path: "/orderbook",
+    name: "orderbook",
+    component: () =>
+      import(/* webpackChunkName: "dashboard" */ "../views/OrderbookView.vue"),
+  },
 ];
 
 const router = new VueRouter({
