@@ -17,14 +17,38 @@
               <v-spacer></v-spacer>
 
               <v-btn
-                @click="buyStock(card.data.stockTicker, card.data.priceLive)"
+                @click="
+                  buyStock(
+                    'BUY',
+                    null,
+                    card.data.stockTicker,
+                    card.data.priceLive
+                  )
+                "
                 color="green"
-                dark
+                class="white--text"
+                :loading="isLoading"
+                :disabled="isLoading"
               >
                 Buy
               </v-btn>
 
-              <v-btn color="red" dark> Sell </v-btn>
+              <v-btn
+                @click="
+                  buyStock(
+                    'SELL',
+                    null,
+                    card.data.stockTicker,
+                    card.data.priceLive
+                  )
+                "
+                color="red"
+                class="white--text"
+                :loading="isLoading"
+                :disabled="isLoading"
+              >
+                Sell
+              </v-btn>
 
               <v-btn color="blue" icon>
                 <v-icon>mdi-forum</v-icon>
@@ -79,36 +103,37 @@ export default {
       // console.log(r, g, b);
       return `#${r}${g}${b}`;
     },
-    async buyStock(ticker, price) {
-      let stockAmount = Math.round(Math.random() * 100);
-      console.log(`[buyStock] Buying ${stockAmount}x${ticker} @ ${price}...`);
+    async buyStock(side, amount, ticker, price) {
+      let userId = this.$store.getters.userData.userId;
+      this.isLoading = true;
+
+      amount = Math.round(Math.random() * 100);
+
+      console.log(`[buyStock] ${side} ${amount}x${ticker} @ ${price}...`);
+
       let result = await axios.post(
         "https://orders.omni-trade.xyz/ordermatching/order",
-        `BUY#${ticker}#${stockAmount}#${price}`,
+        `${side}#${ticker}#${amount}#${price}#${userId}`,
         {
           headers: {
             "Content-Type": "text/plain",
           },
         }
       );
+
+      this.isLoading = false;
+
       if (result.status === 200) {
-        this.stocksList = result.data.data;
-        this.stocksList.forEach((stock) => {
-          this.cards.push({
-            title: Number(stock.priceLive).toFixed(2),
-            src: this.getPlaceholderImage(stock.stockTicker),
-            ticker: stock.stockTicker,
-            flex: 6,
-          });
-        });
+        return true;
       } else {
-        return null;
+        return false;
       }
     },
   },
   data: () => ({
     stocksList: [],
     cards: [],
+    isLoading: false,
   }),
 };
 </script>

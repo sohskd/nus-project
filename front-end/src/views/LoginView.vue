@@ -69,7 +69,7 @@ export default {
       );
       if (result.status === 200) {
         console.log("LOGIN SUCCESS");
-        this.saveUserData(this.username);
+        this.saveUserData(result.data.data);
         this.$router.push("/dashboard");
       }
     },
