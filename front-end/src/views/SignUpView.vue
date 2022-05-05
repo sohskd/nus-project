@@ -53,9 +53,9 @@ export default {
   },
   data() {
     return {
-      username: "issac_clarke",
-      password: "d3adspac3",
-      email: "issac_clarke@sharklasers.com",
+      username: "",
+      password: "",
+      email: "",
     };
   },
   mounted() {},
