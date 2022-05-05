@@ -30,6 +30,18 @@
                 <v-list-item-title>Account</v-list-item-title>
               </v-list-item>
             </router-link>
+            <router-link
+              v-if="isLoggedIn"
+              to="/orderbook"
+              class="text-decoration-none"
+            >
+              <v-list-item>
+                <v-list-item-icon>
+                  <v-icon>mdi-book-open-variant</v-icon>
+                </v-list-item-icon>
+                <v-list-item-title>Order Book</v-list-item-title>
+              </v-list-item>
+            </router-link>
             <router-link to="/about" class="text-decoration-none">
               <v-list-item>
                 <v-list-item-icon>
@@ -65,6 +77,9 @@ export default {
       } else {
         return "/login";
       }
+    },
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
     },
   },
   data: () => ({
