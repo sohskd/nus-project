@@ -61,7 +61,7 @@ public final class Main {
         // print a message at shutdown. If unsuccessful, print the exception.
         webserver.thenAccept(ws -> {
                     System.out.println(
-                            "WEB server is up! http://localhost:" + ws.port() + "/pokemon");
+                            "WEB server is up! http://localhost:" + ws.port() + "/posts");
                     ws.whenShutdown().thenRun(()
                             -> System.out.println("WEB server is DOWN. Good bye!"));
                 })
@@ -96,6 +96,7 @@ public final class Main {
         return Routing.builder()
                 .register(health)                   // Health at "/health"
                 .register(MetricsSupport.create())  // Metrics at "/metrics"
+                // .register("/", new ForumPostService(dbClient))
                 .register("/", new PokemonService(dbClient))
                 .build();
     }
