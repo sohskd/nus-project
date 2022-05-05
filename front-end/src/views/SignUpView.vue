@@ -4,7 +4,14 @@
       <v-col>
         <v-card class="mx-auto" max-width="344">
           <v-card-text>
-            <p class="text-h4 text--primary">Login</p>
+            <p class="text-h4 text--primary">Sign Up</p>
+            <v-text-field
+              label="E-mail"
+              prepend-inner-icon="mdi-email"
+              dense
+              filled
+              v-model="email"
+            ></v-text-field>
             <v-text-field
               label="Username"
               prepend-inner-icon="mdi-account"
@@ -24,10 +31,10 @@
           </v-card-text>
           <v-card-actions>
             <v-col class="text-center">
-              <v-btn color="cyan accent-4" dark @click="signUp">Sign Up</v-btn>
+              <v-btn color="cyan accent-4" dark @click="login">Login</v-btn>
             </v-col>
             <v-col class="text-center">
-              <v-btn color="teal accent-4" dark @click="login">Login</v-btn>
+              <v-btn color="teal accent-4" dark @click="signUp">Sign Up</v-btn>
             </v-col>
           </v-card-actions>
         </v-card>
@@ -37,18 +44,19 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 import { mapMutations } from "vuex";
 
 export default {
-  name: "LoginView",
+  name: "SignUpView",
   components: {
     // HelloWorld,
   },
   data() {
     return {
-      username: "",
-      password: "",
+      username: "issac_clarke",
+      password: "d3adspac3",
+      email: "issac_clarke@sharklasers.com",
     };
   },
   mounted() {},
@@ -57,24 +65,13 @@ export default {
       saveUserData: "saveUserState",
     }),
     async login() {
-      console.log(`LOGIN with ${this.username}, ${this.password}`);
-      let result = await axios.post(
-        "https://accounts.omni-trade.xyz/account/userLogon",
-        `${this.username}#${this.password}`,
-        {
-          headers: {
-            "Content-Type": "text/plain",
-          },
-        }
-      );
-      if (result.status === 200) {
-        console.log("LOGIN SUCCESS");
-        this.saveUserData(result.data.data);
-        this.$router.push("/dashboard");
-      }
+      this.$router.push("/login");
     },
     signUp() {
-      this.$router.push("/signup");
+      console.log(`SIGN UP with ${this.username}, ${this.password}`);
+
+      this.$store.commit("increment");
+      console.log(this.$store.state.count); // -> 1
     },
   },
 };
