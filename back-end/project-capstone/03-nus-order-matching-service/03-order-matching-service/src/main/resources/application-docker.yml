@@ -1,0 +1,32 @@
+server:
+  port: 8080
+
+cloud:
+  aws:
+    credentials:
+      access-key: x
+      secret-key: x
+    region:
+      static: ap-southeast-2
+      auto: false
+    end-point:
+      service: http://elasticmq:9324/
+      buyer:
+        uri: http://elasticmq:9324/000000000000/order_matching_buyer_queue.fifo
+      seller:
+        uri: http://elasticmq:9324/000000000000/order_matching_seller_queue.fifo
+
+bs:
+  mysql:
+    driver: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mysql:3306/omnitrade_orders?characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
+    username: root
+    password: Team3$
+    pool:
+      name: order-mysql
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

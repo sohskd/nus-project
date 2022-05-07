@@ -110,6 +110,12 @@
             </properties>
         </profile>
         <profile>
+            <id>docker</id>
+            <properties>
+                <activatedProperties>docker</activatedProperties>
+            </properties>
+        </profile>
+        <profile>
             <id>cloud-gcp</id>
             <properties>
                 <activatedProperties>cloud-gcp</activatedProperties>

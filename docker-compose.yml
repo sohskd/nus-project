@@ -18,3 +18,22 @@ services:
       - '3306:3306'
     volumes:
       - ./docker/volumes/mysql:/var/lib/mysql
+  orders:
+    image: maven:3.8-jdk-11
+    entrypoint: [ "/bin/bash", "-c" ]
+    command:
+      - |
+        cd /var/www/app
+        mvn -f ./03-order-matching-service-api/pom.xml -B --no-transfer-progress -Dmaven.test.skip=true install
+        mvn -f ./03-order-matching-service-api/pom.xml package
+        mvn -f ./03-order-matching-service/pom.xml -B --no-transfer-progress -Dmaven.test.skip=true install
+        mvn -f ./03-order-matching-service/pom.xml -e -P docker spring-boot:run
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./back-end/project-capstone/03-nus-order-matching-service:/var/www/app
+      - maven-repository:/root/.m2
+
+volumes:
+  maven-repository:
+    external: false
