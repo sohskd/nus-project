@@ -1,26 +1,70 @@
 version: '3.3'
 services:
-  db:
-    image: mysql:5.7
-    restart: always
-    environment:
-      MYSQL_DATABASE: 'db'
-      # So you don't have to use root, but you can if you like
-      MYSQL_USER: 'user'
-      # You can use whatever password you like
-      MYSQL_PASSWORD: 'password'
-      # Password for root access
-      MYSQL_ROOT_PASSWORD: 'password'
+  elasticmq:
+    image: softwaremill/elasticmq-native
     ports:
-      # <Port exposed> : < MySQL Port running inside container>
-      - '3306:3306'
-    expose:
-      # Opens port 3306 on the container
-      - '3306'
-      # Where our data will be persisted
+      - '9324:9324'
+      - '9325:9325'
     volumes:
-      - my-db:/var/lib/mysql
-# Names our volume
-volumes:
-  my-db:
+      - ./docker/volumes/elasticmq/elasticmq.conf:/opt/elasticmq.conf
+  mysql:
+    image: mysql:8
+    cap_add:
+      - SYS_NICE
+    environment:
+      MYSQL_ROOT_PASSWORD: 'Team3$$'
+    ports:
+      - '3306:3306'
+    volumes:
+      - ./docker/volumes/mysql/init_scripts:/docker-entrypoint-initdb.d
+      - ./docker/volumes/mysql/data:/var/lib/mysql
+  accounts:
+    image: maven:3.8-jdk-11
+    depends_on:
+      - mysql
+    entrypoint: [ "/bin/bash", "-c" ]
+    command:
+      - |
+        cd /var/www/app
+        mvn -f ./02-account-mgt-service/pom.xml -B --no-transfer-progress -Dmaven.test.skip=true install
+        mvn -f ./02-account-mgt-service/pom.xml -e -P docker spring-boot:run
+    ports:
+      - '8081:8080'
+    volumes:
+      - ./back-end/project-capstone/02-nus-account-mgt-service:/var/www/app
+      - maven-repository:/root/.m2
+  orders:
+    image: maven:3.8-jdk-11
+    depends_on:
+      - accounts
+      - mysql
+      - elasticmq
+    entrypoint: [ "/bin/bash", "-c" ]
+    command:
+      - |
+        cd /var/www/app
+        mvn -f ./03-order-matching-service-api/pom.xml -B --no-transfer-progress -Dmaven.test.skip=true install
+        mvn -f ./03-order-matching-service-api/pom.xml package
+        mvn -f ./03-order-matching-service/pom.xml -B --no-transfer-progress -Dmaven.test.skip=true install
+        mvn -f ./03-order-matching-service/pom.xml -e -P docker spring-boot:run
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./back-end/project-capstone/03-nus-order-matching-service:/var/www/app
+      - maven-repository:/root/.m2
+  # web_frontend:
+  #   image: node:16
+  #   entrypoint: [ "/bin/bash", "-c" ]
+  #   command:
+  #     - |
+  #       cd /var/www/app
+  #       npm install
+  #       npm run serve
+  #   ports:
+  #     - '8888:8080'
+  #   volumes:
+  #     - ./front-end:/var/www/app
 
+volumes:
+  maven-repository:
+    external: false

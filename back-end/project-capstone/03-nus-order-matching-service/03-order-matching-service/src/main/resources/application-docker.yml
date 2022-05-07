@@ -1,10 +1,6 @@
 server:
   port: 8080
 
-spring:
-  profiles:
-    active: @activatedProperties@
-
 cloud:
   aws:
     credentials:
@@ -14,16 +10,16 @@ cloud:
       static: ap-southeast-2
       auto: false
     end-point:
-      service: http://127.0.0.1:9324/
+      service: http://elasticmq:9324/
       buyer:
-        uri: http://127.0.0.1:9324/000000000000/order_matching_buyer_queue.fifo
+        uri: http://elasticmq:9324/000000000000/order_matching_buyer_queue.fifo
       seller:
-        uri: http://127.0.0.1:9324/000000000000/order_matching_seller_queue.fifo
+        uri: http://elasticmq:9324/000000000000/order_matching_seller_queue.fifo
 
 bs:
   mysql:
     driver: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/omnitrade_orders?characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
+    url: jdbc:mysql://mysql:3306/omnitrade_orders?characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
     username: root
     password: Team3$
     pool:

@@ -30,6 +30,21 @@
                 </dependency>
             </dependencies>
         </profile>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <activatedProperties>default</activatedProperties>
+            </properties>
+        </profile>
+        <profile>
+            <id>docker</id>
+            <properties>
+                <activatedProperties>docker</activatedProperties>
+            </properties>
+        </profile>
     </profiles>
 
     <dependencies>

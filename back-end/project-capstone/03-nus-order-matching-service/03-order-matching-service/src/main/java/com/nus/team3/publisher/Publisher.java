@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.aws.messaging.core.QueueMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,9 +25,6 @@ import static com.nus.team3.dao.TransactionDao.*;
 public class Publisher {
 
 	private static final Logger logger = LoggerFactory.getLogger(Publisher.class);
-
-	@Autowired
-	private QueueMessagingTemplate queueMessagingTemplate;
 
 	@Autowired
 	@Qualifier("mysqlSqlSessionTemplate")

@@ -59,7 +59,7 @@ export default {
     async login() {
       console.log(`LOGIN with ${this.username}, ${this.password}`);
       let result = await axios.post(
-        "https://accounts.omni-trade.xyz/account/userLogon",
+        `${process.env.VUE_APP_ENDPOINT_ACCOUNTS}/account/userLogon`,
         `${this.username}#${this.password}`,
         {
           headers: {
@@ -67,10 +67,12 @@ export default {
           },
         }
       );
-      if (result.status === 200) {
+      if (result.status === 200 && result.data.success === true) {
         console.log("LOGIN SUCCESS");
         this.saveUserData(result.data.data);
         this.$router.push("/dashboard");
+      } else {
+        console.log("LOGIN FAILED");
       }
     },
     signUp() {

@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.5.RELEASE</version>
+        <version>2.6.7</version>
         <relativePath />
         <!-- lookup parent from repository -->
     </parent>
@@ -40,11 +40,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.google.cloud.sql</groupId>
-            <artifactId>mysql-socket-factory</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.24</version>
@@ -64,33 +59,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-aws</artifactId>
+            <artifactId>spring-cloud-aws-messaging</artifactId>
             <version>2.2.6.RELEASE</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.httpcomponents</groupId>
-                    <artifactId>httpcore</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-aws-messaging</artifactId>
-            <version>2.2.6.RELEASE</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.httpcomponents</groupId>
-                    <artifactId>httpclient</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.13</version>
-        </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -99,37 +74,11 @@
         </dependency>
 
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>3.0.0</version>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.6.8</version>
         </dependency>
     </dependencies>
-
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.google.cloud</groupId>
-                <artifactId>spring-cloud-gcp-dependencies</artifactId>
-                <version>${spring-cloud-gcp.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <build>
         <plugins>
@@ -152,10 +101,19 @@
 
     <profiles>
         <profile>
-            <id>dev</id>
+            <id>default</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+            <properties>
+                <activatedProperties>default</activatedProperties>
+            </properties>
+        </profile>
+        <profile>
+            <id>docker</id>
+            <properties>
+                <activatedProperties>docker</activatedProperties>
+            </properties>
         </profile>
         <profile>
             <id>cloud-gcp</id>
@@ -167,6 +125,27 @@
                     <groupId>org.springframework.cloud</groupId>
                     <artifactId>spring-cloud-gcp-starter</artifactId>
                     <version>1.0.0.RELEASE</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.springframework.cloud</groupId>
+                    <artifactId>spring-cloud-dependencies</artifactId>
+                    <version>${spring-cloud.version}</version>
+                    <type>pom</type>
+                    <scope>import</scope>
+                </dependency>
+
+                <dependency>
+                    <groupId>com.google.cloud</groupId>
+                    <artifactId>spring-cloud-gcp-dependencies</artifactId>
+                    <version>${spring-cloud-gcp.version}</version>
+                    <type>pom</type>
+                    <scope>import</scope>
+                </dependency>
+
+                <dependency>
+                    <groupId>com.google.cloud.sql</groupId>
+                    <artifactId>mysql-socket-factory</artifactId>
+                    <version>1.6.0</version>
                 </dependency>
             </dependencies>
             <build>
