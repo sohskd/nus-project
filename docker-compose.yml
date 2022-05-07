@@ -18,8 +18,27 @@ services:
       - '3306:3306'
     volumes:
       - ./docker/volumes/mysql:/var/lib/mysql
+  accounts:
+    image: maven:3.8-jdk-11
+    depends_on:
+      - mysql
+    entrypoint: [ "/bin/bash", "-c" ]
+    command:
+      - |
+        cd /var/www/app
+        mvn -f ./02-account-mgt-service/pom.xml -B --no-transfer-progress -Dmaven.test.skip=true install
+        mvn -f ./02-account-mgt-service/pom.xml -e -P docker spring-boot:run
+    ports:
+      - '8081:8080'
+    volumes:
+      - ./back-end/project-capstone/02-nus-account-mgt-service:/var/www/app
+      - maven-repository:/root/.m2
   orders:
     image: maven:3.8-jdk-11
+    depends_on:
+      - accounts
+      - mysql
+      - elasticmq
     entrypoint: [ "/bin/bash", "-c" ]
     command:
       - |
