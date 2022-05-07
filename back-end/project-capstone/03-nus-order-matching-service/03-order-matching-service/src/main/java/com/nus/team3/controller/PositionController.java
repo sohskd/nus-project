@@ -5,7 +5,6 @@ import com.nus.team3.dto.StockLiveDto;
 import com.nus.team3.entity.GeneralMessageEntity;
 import com.nus.team3.entity.PositionPageEntity;
 import com.nus.team3.service.PositionService;
-import io.swagger.annotations.Api;
 import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
@@ -16,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 // NOTE: CORS origins MUST be exact match!
 @CrossOrigin(origins = {"https://www.omni-trade.xyz","*"})
-@Api
+@Tag(name = "PositionController", description = "PositionController")
 @Slf4j
 @RestController
 @RequestMapping("/api")
