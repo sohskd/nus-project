@@ -14,10 +14,11 @@ cloud:
       static: ap-southeast-2
       auto: false
     end-point:
+      service: http://127.0.0.1:9324/
       buyer:
-        uri: http://127.0.0.1:9324/099209825265/order_matching_buyer_queue.fifo
+        uri: http://127.0.0.1:9324/000000000000/order_matching_buyer_queue.fifo
       seller:
-        uri: http://127.0.0.1:9324/099209825265/order_matching_seller_queue.fifo
+        uri: http://127.0.0.1:9324/000000000000/order_matching_seller_queue.fifo
 
 bs:
   mysql:
