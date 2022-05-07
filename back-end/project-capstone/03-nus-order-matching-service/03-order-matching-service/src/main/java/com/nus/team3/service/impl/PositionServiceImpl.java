@@ -4,7 +4,6 @@ import com.nus.team3.dto.PositionDto;
 import com.nus.team3.dto.StockLiveDto;
 import com.nus.team3.mapper.PositionMapper;
 import com.nus.team3.mapper.StockLiveMapper;
-import com.nus.team3.mapper.UserAccountMapper;
 import com.nus.team3.service.PositionService;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,14 +19,11 @@ import org.springframework.stereotype.Service;
 public class PositionServiceImpl implements PositionService {
 
   private final PositionMapper positionMapper;
-  private final UserAccountMapper userAccountMapper;
   private final StockLiveMapper stockLiveMapper;
 
   @Autowired
-  public PositionServiceImpl(PositionMapper positionMapper,
-      UserAccountMapper userAccountMapper, StockLiveMapper stockLiveMapper) {
+  public PositionServiceImpl(PositionMapper positionMapper, StockLiveMapper stockLiveMapper) {
     this.positionMapper = positionMapper;
-    this.userAccountMapper = userAccountMapper;
     this.stockLiveMapper = stockLiveMapper;
   }
 
