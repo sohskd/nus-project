@@ -12,16 +12,16 @@ import org.springframework.stereotype.Component;
 @Component
 public interface AccountServiceMapper {
     class Statements {
-        static final String USER_GET = "SELECT * FROM user WHERE username=#{username}";
-        static final String USER_CREATE = "INSERT INTO user (email,username,password,loggon_i)" +
+        static final String USER_GET = "SELECT * FROM user_account_tab WHERE username=#{username}";
+        static final String USER_CREATE = "INSERT INTO user_account_tab (email,username,password,loggon_i)" +
                 "VALUES (#{email}, #{username}, #{password}, #{loggon_i})";
-        static final String USER_LOGIN = "UPDATE user " +
+        static final String USER_LOGIN = "UPDATE user_account_tab " +
                 "SET loggon_i = 1 " +
                 "WHERE username = #{username}";
-        static final String USER_LOGOFF = "UPDATE user " +
+        static final String USER_LOGOFF = "UPDATE user_account_tab " +
                 "SET loggon_i = 0 " +
                 "WHERE username = #{username}";
-        static final String USER_GET_PASSWORD = "SELECT password FROM user WHERE username=#{username}";
+        static final String USER_GET_PASSWORD = "SELECT id, email, username FROM user_account_tab WHERE username=#{username} AND password=#{password}";
     }
 
     @Select({ Statements.USER_GET })
@@ -34,8 +34,8 @@ public interface AccountServiceMapper {
     })
     List<User> getUserInfo(@Param("username") String username);
 
-
     @Insert({ Statements.USER_CREATE })
+    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
     public int createNewAccount(User user);
 
     @Update({ Statements.USER_LOGIN })
@@ -44,11 +44,11 @@ public interface AccountServiceMapper {
     @Update({ Statements.USER_LOGOFF })
     int userLogoff(@Param("username") String username);
 
-    @Select({ Statements.USER_GET_PASSWORD})
+    @Select({ Statements.USER_GET_PASSWORD })
     @Results({
-        @Result(property = "password", column = "password")
+            @Result(property = "id", column = "id"),
+            @Result(property = "email", column = "email"),
+            @Result(property = "username", column = "username")
     })
-    List<String> validatePassword(@Param("username") String username);
-    
-
+    List<User> validatePassword(@Param("username") String username, @Param("password") String password);
 }
