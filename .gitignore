@@ -1,2 +1,2 @@
 .idea
-docker/volumes/mysql
+docker/volumes/mysql/data

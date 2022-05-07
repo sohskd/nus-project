@@ -12,12 +12,12 @@ services:
     cap_add:
       - SYS_NICE
     environment:
-      MYSQL_DATABASE: 'omnitrade_orders'
       MYSQL_ROOT_PASSWORD: 'Team3$$'
     ports:
       - '3306:3306'
     volumes:
-      - ./docker/volumes/mysql:/var/lib/mysql
+      - ./docker/volumes/mysql/init_scripts:/docker-entrypoint-initdb.d
+      - ./docker/volumes/mysql/data:/var/lib/mysql
   accounts:
     image: maven:3.8-jdk-11
     depends_on:
