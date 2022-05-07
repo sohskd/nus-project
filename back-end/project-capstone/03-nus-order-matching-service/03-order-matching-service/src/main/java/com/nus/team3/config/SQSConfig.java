@@ -31,9 +31,11 @@ public class SQSConfig {
 
 		AmazonSQSAsyncClientBuilder amazonSQSAsyncClientBuilder = AmazonSQSAsyncClientBuilder.standard();
 		AmazonSQSAsync amazonSQSAsync = null;
-		amazonSQSAsyncClientBuilder.withRegion(Regions.AP_SOUTHEAST_2);
-		BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(accessKey, secretKey);
+		// amazonSQSAsyncClientBuilder.withRegion(Regions.AP_SOUTHEAST_2);
+		BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials("x", "x");
 		amazonSQSAsyncClientBuilder.withCredentials(new AWSStaticCredentialsProvider(basicAWSCredentials));
+		amazonSQSAsyncClientBuilder.withEndpointConfiguration(
+				new AmazonSQSAsyncClientBuilder.EndpointConfiguration("localhost:9324", "ap-southeast-2"));
 		amazonSQSAsync = amazonSQSAsyncClientBuilder.build();
 		return amazonSQSAsync;
 

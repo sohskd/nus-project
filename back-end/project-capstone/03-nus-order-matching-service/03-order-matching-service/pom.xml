@@ -156,6 +156,9 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+            <properties>
+                <activatedProperties>default</activatedProperties>
+            </properties>
         </profile>
         <profile>
             <id>cloud-gcp</id>
