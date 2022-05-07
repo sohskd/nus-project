@@ -52,6 +52,18 @@ services:
     volumes:
       - ./back-end/project-capstone/03-nus-order-matching-service:/var/www/app
       - maven-repository:/root/.m2
+  # web_frontend:
+  #   image: node:16
+  #   entrypoint: [ "/bin/bash", "-c" ]
+  #   command:
+  #     - |
+  #       cd /var/www/app
+  #       npm install
+  #       npm run serve
+  #   ports:
+  #     - '8888:8080'
+  #   volumes:
+  #     - ./front-end:/var/www/app
 
 volumes:
   maven-repository:
