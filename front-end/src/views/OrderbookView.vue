@@ -43,7 +43,7 @@ export default {
     async getOrderHistory() {
       let userId = this.$store.getters.userData.userId;
       let result = await axios.get(
-        `https://orders.omni-trade.xyz/api/position?userId=${userId}`
+        `${process.env.VUE_APP_ENDPOINT_ORDERS}/api/position?userId=${userId}`
       );
       if (result.status === 200) {
         this.trades = result.data.data;

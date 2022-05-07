@@ -68,7 +68,7 @@ export default {
         `SIGN UP with ${this.email}, ${this.username}, ${this.password}`
       );
       let result = await axios.post(
-        "https://accounts.omni-trade.xyz/account/createNewAccount",
+        `${process.env.VUE_APP_ENDPOINT_ACCOUNTS}/account/createNewAccount`,
         {
           email: this.email,
           username: this.username,
