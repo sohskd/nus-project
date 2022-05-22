@@ -54,3 +54,6 @@ extension is required.
 
 Simply run `docker-compose -f ./docker-compose.yml up -d` in the root project
 folder to start the containers.
+
+To develop on the frontend, simply run `npm run serve` in the `frontend` folder.
+(Assuming you've already installed the dependencies with `npm install`.)
